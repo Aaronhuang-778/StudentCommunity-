@@ -3,7 +3,7 @@ import django
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'BuaaTalk.settings'
 django.setup()
-from app.models import User, Post, Like, Unlike, Comment, Keyword, Follow_star
+from app.models import User, Post, Like, Unlike, Comment, Keyword, Follow_star, Message
 
 
 def register(user_name, user_phone, password, picture):
@@ -18,20 +18,22 @@ def register(user_name, user_phone, password, picture):
 def signin(user_phone, password):
     try:
         user = User.objects.filter(user_phone=user_phone)[0]
-        return password == user.password
+        return password == user.password, user.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, -1
 
 
 def publishPost(post_title, content, user_id, keyword_id):
     try:
-        Post.objects.create(post_title=post_title, content=content, user_id=user_id, keyword_id=keyword_id)
+        keyword = Keyword.objects.filter(id=keyword_id)[0]
+        post = Post.objects.create(post_title=post_title, content=content, user_id=user_id,
+                                   keyword_name=keyword.keyword_name)
         addsub(user_id, 'post_num', '+', 'User')
-        return True
+        return True, post.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, None
 
 
 def delPost(post_id):
@@ -42,6 +44,7 @@ def delPost(post_id):
         Unlike.objects.filter(post_id=post_id).delete()
         Comment.objects.filter(post_id=post_id).delete()
         post.delete()
+        return True
     except Exception as e:
         print(str(e))
         return False
@@ -49,11 +52,12 @@ def delPost(post_id):
 
 def like(post_id, user_id):
     try:
-        Like.objects.create(post_id=post_id, user_id=user_id)
+        like = Like.objects.create(post_id=post_id, user_id=user_id)
         addsub(post_id, 'like_number', '+', 'Post')
+        return True, like.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, None
 
 
 def cancellike(like_id):
@@ -61,6 +65,7 @@ def cancellike(like_id):
         like = Like.objects.filter(id=like_id)[0]
         addsub(like.post_id, 'like_number', '-', 'Post')
         like.delete()
+        return True
     except Exception as e:
         print(str(e))
         return False
@@ -68,11 +73,12 @@ def cancellike(like_id):
 
 def unlike(post_id, user_id):
     try:
-        Unlike.objects.create(post_id=post_id, user_id=user_id)
+        unlike = Unlike.objects.create(post_id=post_id, user_id=user_id)
         addsub(post_id, 'unlike_number', '+', 'Post')
+        return True, unlike.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, None
 
 
 def cancelunlike(unlike_id):
@@ -80,6 +86,7 @@ def cancelunlike(unlike_id):
         unlike = Unlike.objects.filter(id=unlike_id)[0]
         addsub(unlike.post_id, 'unlike_number', '-', 'Post')
         unlike.delete()
+        return True
     except Exception as e:
         print(str(e))
         return False
@@ -87,11 +94,12 @@ def cancelunlike(unlike_id):
 
 def comment(post_id, user_id, content):
     try:
-        Comment.objects.create(post_id=post_id, user_id=user_id, content=content)
+        comment = Comment.objects.create(post_id=post_id, user_id=user_id, content=content)
         addsub(post_id, 'comment_number', '+', 'Post')
+        return True, comment.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, None
 
 
 def cancelcomment(comment_id):
@@ -99,6 +107,7 @@ def cancelcomment(comment_id):
         comment = Comment.objects.filter(id=comment_id)[0]
         addsub(comment.post_id, 'comment_number', '-', 'Post')
         comment.delete()
+        return True
     except Exception as e:
         print(str(e))
         return False
@@ -106,12 +115,13 @@ def cancelcomment(comment_id):
 
 def follow(follow_id, star_id):
     try:
-        Follow_star.objects.create(follow_id=follow_id, star_id=star_id)
+        follow_star = Follow_star.objects.create(follow_id=follow_id, star_id=star_id)
         addsub(follow_id, 'star_num', '+', 'User')
         addsub(star_id, 'follow_num', '+', 'User')
+        return True, follow_star.dict()
     except Exception as e:
         print(str(e))
-        return False
+        return False, None
 
 
 def cancelfollow(follow_star_id):
@@ -120,6 +130,26 @@ def cancelfollow(follow_star_id):
         addsub(follow_star.follow_id, 'star_num', '-', 'User')
         addsub(follow_star.star_id, 'follow_num', '-', 'User')
         follow_star.delete()
+        return True
+    except Exception as e:
+        print(str(e))
+        return False
+
+
+def message(send_user_id, receive_user_id, content):
+    try:
+        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=receive_user_id, content=content)
+        return True, message.dict()
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+def cancelmessage(message_id):
+    try:
+        message = Message.objects.filter(id=message_id)[0]
+        message.delete()
+        return True
     except Exception as e:
         print(str(e))
         return False
@@ -140,3 +170,63 @@ def addsub(id: int, attribute: str, type: str, table=None):  # 表.字段+-=1
     temp = eval(table + '.objects.filter(id=' + str(id) + ')[0]')
     exec('temp.' + attribute + type + '=1')
     temp.save()
+
+
+def getUser(user_id):
+    try:
+        user = User.objects.filter(id=user_id)[0]
+        res = user.dict()
+        message = Message.objects.filter(receive_user_id=user_id)
+        messages = [i.dict() for i in message]
+        res["message"] = messages
+        return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+def getPost(post_id, user_id):
+    try:
+        post = Post.objects.filter(id=post_id)[0]
+        res = post.dict()
+        commment = Comment.objects.filter(post_id=post_id)
+        commments = [i.dict() for i in commment]
+        likes = Like.objects.filter(post_id=post_id, user_id=user_id)
+        if len(likes) == 0:
+            res["like_id"] = -1
+        else:
+            res["like_id"] = likes[0].id
+        unlikes = Unlike.objects.filter(post_id=post_id, user_id=user_id)
+        if len(unlikes) == 0:
+            res["unlike_id"] = -1
+        else:
+            res["unlike_id"] = unlikes[0].id
+        res["commment"] = commments
+        return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+def getPostList():
+    try:
+        res = {}
+        post = Post.objects.all().order_by('-post_date')
+        posts = [i.dict() for i in post]
+        res["post"] = posts
+        return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+def getMyPostList(user_id):
+    try:
+        res = {}
+        post = Post.objects.filter(user_id=user_id).order_by('-post_date')
+        posts = [i.dict() for i in post]
+        res["post"] = posts
+        return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None

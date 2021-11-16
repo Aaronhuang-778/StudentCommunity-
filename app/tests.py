@@ -22,7 +22,8 @@ class test(TestCase):
         # user = User.objects.filter(id=1)[0]
         # print(user.follow_num)
         # tools.delPost(1)
-        tools.like(1, 1)
-        post = Post.objects.filter(id=1)[0]
-        print(post.like_number)
-        print(Like.objects.all())
+        # tools.like(1, 1)
+        # post = Post.objects.filter(id=1)[0]
+        # print(post.__dict__)
+        # print(Like.objects.all())
+        tools.getUser(3)
