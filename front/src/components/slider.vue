@@ -1,22 +1,19 @@
 <template>
   <div class="right slider">
     <img class="right-logo"
-         src="../assets/userLogo.jpeg"
+         src="../assets/user.png"
          alt="">
-    <div class="title">夜尽天明</div>
+    <div class="title">BUAA之神</div>
     <div class="right-content">
-      <!-- <div class="item">
+      <div class="item">
+        <div class="num">123</div>帖子
+      </div>
+      <div class="item">
         <div class="num">123</div>粉丝
       </div>
       <div class="item">
-        <div class="num">123</div>文章
+        <div class="num">123</div>关注
       </div>
-      <div class="item">
-        <div class="num">123</div>字数
-      </div>
-      <div class="item">
-        <div class="num">123</div>收获喜欢
-      </div> -->
     </div>
     <div class="tags">
       <div class="title">标签云</div>
@@ -28,19 +25,17 @@
       </router-link>
     </div>
     <div class="introduce">
-      <div class="title">技术以内的 BB</div>
+      <div class="title">校园交流园地</div>
       <div class="content">
         <img style="width:100%;"
-             src="../assets/BiaoChenXuYing.png"
-             alt="全栈修炼" />
+             src="../assets/g1.jpg" />
       </div>
     </div>
     <div class="introduce">
-      <div class="title">技术以外的 BB</div>
+      <div class="title">今日北航美景</div>
       <div class="content">
         <img style="width:100%;"
-             src="../assets/YingHeZaHuoPu.png"
-             alt="硬核杂货铺" />
+             src="../assets/buaa1.jpg" />
       </div>
     </div>
   </div>
@@ -54,7 +49,12 @@ import { Params, TagsData } from "@/types/index";
 export default class Slider extends Vue {
   private isLoadEnd: boolean = false;
   private isLoading: boolean = false;
-  private list: Array<object> = [];
+  private list: Array<object> = [
+    {'id': 1, 'name': "Django"},
+    {'id': 2, 'name': "Java"},
+    {'id': 3, 'name': "编译技术原理"},
+    {'id': 4, 'name': "数据库设计原理"}
+  ];
   private total: number = 0;
   private params: Params = {
     keyword: "",

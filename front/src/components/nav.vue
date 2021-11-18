@@ -7,8 +7,7 @@
           <el-col :span="3">
             <router-link to="/">
               <img class="logo"
-                   src="../assets/logo.jpg"
-                   alt="BiaoChenXuYing">
+                   src="../assets/home.png">
             </router-link>
           </el-col>
           <el-col :span="16">
@@ -35,105 +34,28 @@
                 </span>
                 <img v-if="!userInfo.avatar"
                      class="user-img"
-                     src="../assets/user.png"
-                     alt="BiaoChenXuYing">
+                     src="../assets/user.png">
                 <img v-if="userInfo.avatar"
                      class="user-img"
-                     :src="userInfo.avatar"
-                     alt="BiaoChenXuYing">
+                     :src="userInfo.avatar">
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="logout">登 出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
           </el-col>
-          <el-col v-else
-                  :span="4">
-            <div class="nav-right">
-              <el-button size="small"
-                         type="primary"
-                         @click="handleClick('login')">登录</el-button>
-              <el-button size="small"
-                         type="danger"
-                         @click="handleClick('register')">注册</el-button>
-            </div>
-          </el-col>
+<!--          <el-col v-else-->
+<!--                  :span="4">-->
+<!--            <div class="nav-right">-->
+<!--              <el-button size="small"-->
+<!--                         type="danger"-->
+<!--                         @click="handleClickMenu('logout')">登出</el-button>-->
+<!--            </div>-->
+<!--          </el-col>-->
         </el-row>
       </div>
     </div>
-    <div v-else
-         class="nav">
-      <div class="nav-mobile">
-        <div class="nav-mobile-logo">
-          <router-link to="/">
-            <img class="logo fl"
-                 src="../assets/logo.jpg"
-                 alt="BiaoChenXuYing">
-          </router-link>
-        </div>
-        <div class="title">{{title}}</div>
-        <div class="menu"
-             @click="handleMenu"><i class="el-icon-menu"></i></div>
-      </div>
-      <div v-if="isShow"
-           class="nav-mobile-content"
-           :class="{'enter-slideUp': enterSlideUp,'leave-slideDown': leaveSlideDown}">
-        <div class="list">
-          <div @click="handleClickMenu"
-               class="item">
-            <router-link to="/">首 页</router-link>
-          </div>
-          <div @click="handleClickMenu('/articles')"
-               class="item">
-            <router-link to="/articles">文 章</router-link>
-          </div>
-          <div @click="handleClickMenu('/archive')"
-               class="item">
-            <router-link to="/archive">归 档</router-link>
-          </div>
-          <div @click="handleClickMenu('/project')"
-               class="item">
-            <router-link to="/project">项 目</router-link>
-          </div>
-          <div @click="handleClickMenu('/timeline')"
-               class="item">
-            <router-link to="/timeline">历 程</router-link>
-          </div>
-          <div @click="handleClickMenu('/message')"
-               class="item">
-            <router-link to="/message">留 言</router-link>
-          </div>
-          <div @click="handleClickMenu('/about')"
-               class="item">
-            <router-link to="/about">关 于</router-link>
-          </div>
-          <div @click="handleClickMenu('/login')"
-               class="item">
-            <span v-if="userInfo._id">{{ userInfo.name }}</span>
-            <span v-else>登 录</span>
-          </div>
-          <div v-if="!userInfo._id"
-               @click="handleClickMenu('/register')"
-               class="item">
-            注 册
-          </div>
-          <div v-if="userInfo._id"
-               @click="handleClickMenu('/logout')"
-               class="item">
-            登 出
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="isShow"
-         class="mask"
-         :class="{'mask-fade-out': leaveSlideDown}"
-         @click="handleHideMenu"></div>
-    <RegisterAndLogin :visible="visible"
-                      :isMobile="isMobile"
-                      :handleFlag="handleFlag"
-                      @ok="handleOk"
-                      @cancel="handleCancel"></RegisterAndLogin>
+
   </div>
 </template>
 
@@ -156,36 +78,26 @@ export default class Nav extends Vue {
   private list: Array<NavListItem> = [
     {
       index: "1",
-      path: "/",
-      name: "首页"
+      path: "/ground",
+      name: "广场"
     },
     {
       index: "2",
       path: "/articles",
-      name: "文章"
+      name: "帖子"
     },
     {
       index: "3",
-      path: "/archive",
-      name: "归档"
+      path: "/release",
+      name: "发布"
     },
     {
       index: "4",
-      path: "/project",
-      name: "项目"
-    },
-    {
-      index: "5",
-      path: "/timeline",
-      name: "历程"
-    },
-    {
-      index: "6",
       path: "/message",
       name: "留言"
     },
     {
-      index: "7",
+      index: "5",
       path: "/about",
       name: "关于"
     }
@@ -237,16 +149,9 @@ export default class Nav extends Vue {
 
   private handleClickMenu(route: string): void {
     this.isShow = false;
-    if (route === "/login") {
-      this.handleFlag = "login";
-      this.visible = true;
-    }
-    if (route === "/register") {
-      this.handleFlag = "register";
-      this.visible = true;
-    }
     if (route === "/logout") {
       this.handleLogout();
+      this.$router.push("/")
     }
   }
   private handleMenu(): void {

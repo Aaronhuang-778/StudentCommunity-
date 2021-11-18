@@ -33,6 +33,8 @@
         </li>
       </transition-group>
     </ul>
+<!--    <LoadingCustom v-if="isLoading"></LoadingCustom>-->
+<!--    <LoadEnd v-if="isLoadEnd"></LoadEnd>-->
   </div>
 </template>
 

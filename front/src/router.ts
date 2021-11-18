@@ -12,11 +12,24 @@ export default new Router({
       name: "home",
       component: () => import(/* webpackChunkName: "home" */ "./views/home.vue")
     },
-    // {
-    //   path: "/home2",
-    //   name: "home2",
-    //   component: () => import(/* webpackChunkName: "home2" */ "./views/home2.vue")
-    // },
+    {
+      path: "/ground",
+      name: "ground",
+      // route level code-splitting
+      // this generates a separate chunk (articles.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "articles" */ "./views/ground.vue")
+    },
+    {
+      path: "/release",
+      name: "release",
+      // route level code-splitting
+      // this generates a separate chunk (articles.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "articles" */ "./views/release.vue")
+    },
     {
       path: "/articles",
       name: "articles",
