@@ -1,13 +1,8 @@
 <template>
-  <div id="app"
-       class="container">
+  <div id="app">
     <Nav v-if="isShowNav" />
-    <div class=" layout">
       <router-view />
-      <Slider v-if="isShowSlider"></Slider>
-    </div>
     <ArrowUp></ArrowUp>
-    <Footer v-show="isShowNav"></Footer>
   </div>
 </template>
 <script lang="ts">
@@ -62,16 +57,30 @@ export default class App extends Vue {
 </script>
 
 <style lang="less">
+:root {
+      /* COLORS */
+      --white: #e9e9e9;
+      --gray: #333;
+      --blue: #0367a6;
+      --lightblue: #008997;
+
+      /* RADII */
+      --button-radius: 0.7rem;
+
+      /* SIZES */
+      --max-width: 758px;
+      --max-height: 420px;
+
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
 @import url("./less/index.less");
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
-  color: #2c3e50;
-  width: 1200px;
-  margin: 0 auto;
-  padding-top: 61px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 img {
   vertical-align: bottom;
