@@ -2,6 +2,7 @@
   <div class="left clearfix">
     <h3 v-if="params.tag_id"
         class="left-title">{{tag_name}} 相关的文章：</h3>
+    <div>{{user_name}}</div>
     <ul class="articles-list"
         id="list">
       <transition-group name="el-fade-in">
