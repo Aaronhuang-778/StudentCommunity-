@@ -1,321 +1,143 @@
 <template>
-  <div class="_body">
-    <div class="container right-panel-active">
-      <!-- Sign Up -->
-      <div class="container__form container--signup">
-        <form action="#" class="form" id="form1">
-          <h2 class="form__title">注册</h2>
-          <input type="text" placeholder="用户名" class="input" />
-          <input type="text" placeholder="手机号码" class="input" v-model="UpData.phone_number" @blur="CheckPhone2"/>
-          <span :class="tipsStyle2">{{ tips2 }}</span>
-          <input type="password" placeholder="密码" class="input" v-model= "UpData.password" @blur="CheckPassWords"/>
-          <span :class="tipsStyle_p">{{ tips_p }}</span>
-          <button class="btn">注册</button>
-        </form>
-      </div>
+  <div class="home">
+    <canvas id="sakura" />
+    <div class="content">
+      <div class="home-header">
+        <router-link class="link"
+                     to="/home">
 
-      <!-- Sign In -->
-      <div class="container__form container--signin">
-        <form action="#" class="form" id="form2">
-          <h2 class="form__title">登录</h2>
-          <input type="text" placeholder="手机号码" class="input" v-model="InData.phone_number" @blur="CheckPhone1"/>
-          <span :class="tipsStyle1">{{ tips1 }}</span>
-          <input type="password" placeholder="密码" class="input" v-model= "InData.password" />
-          <a class="link">忘记密码请联系管理员找回密码</a>
-          <button class="btn">登录</button>
-        </form>
+        </router-link>
       </div>
+      <div class="home-body">
+        <div class="list">
+          <router-link class="link"
+                       to="/login">
+            登录
+          </router-link>
 
-      <!-- Overlay -->
-      <div class="container__overlay">
-        <div class="overlay">
-          <div class="overlay__panel overlay--left">
-            <button class="btn" id="signIn" @click="InClick()">登录</button>
-          </div>
-          <div class="overlay__panel overlay--right">
-            <button class="btn" id="signUp" @click="UpClick()">注册</button>
-          </div>
         </div>
+        <div class="introduce"> 时光正好，未来可期，加油 ！ </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "newLogin",
-  data() {
-    return {
-      InData: {
-        phone_number: '',
-        password: ''
-      },
-      UpData: {
-        phone_number: '',
-        password: ''
-      },
-      tips1:'',//In
-      tipsStyle1:'',
-      tips2:'',
-      tipsStyle2:'',
-      tips_p:'',
-      tipsStyle_p:'',
+<script lang="ts">
+// 满屏落花效果
+import { Component, Vue } from "vue-property-decorator";
+declare var document: Document | any;
 
+@Component({})
+export default class Home extends Vue {
+
+}
+</script>
+<style lang="less" scoped>
+.home {
+  position: fixed;
+  left: 0;
+  top: 0;
+  .content {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 12%;
+    .home-logo {
+      width: 220px;
+      border-radius: 50%;
+      animation: mylogo 3s;
+      -moz-animation: mylogo 3s; /* Firefox */
+      -webkit-animation: mylogo 3s; /* Safari and Chrome */
+      -o-animation: mylogo 3s; /* Opera */
+      animation-iteration-count: infinite;
     }
-  },
-  methods: {
-    InClick() {
-      addEventListener("click", () => {
-        const container = document.querySelector(".container");
-        container.classList.remove("right-panel-active");
-        this.data.UpData.phone_number = '';
-        this.data.UpData.password = '';
-      });
-    },
-
-    UpClick() {
-      addEventListener("click", () => {
-        const container = document.querySelector(".container");
-        container.classList.add("right-panel-active");
-        this.data.InData.phone_number = '';
-        this.data.UpData.password = '';
-      });
-    },
-
-    async CheckPassWords() {
-        if (this. InData.password.length < 8 || this. InData.password.length > 32){
-          this.tips_p = '密码长度在8-32字符'
-          this.tipsStyle_p = 'tips-err'
-          return false
+    .home-header {
+      .link {
+        display: block;
+      }
+    }
+    .home-body {
+      padding-top: 20px;
+      .list {
+        .link {
+          display: inline-block;
+          padding: 20px;
+          color: #409eff;
+          min-width: 80px;
         }
-        else {
-          this.tips = ''
-          return true
+        .link:hover {
+          color: rgb(155, 35, 35);
         }
-    },
-    async CheckPhone1() {
-        if (this. InData.phone_number.length !== 11){
-          this.tips1 = '请输入正确的电话号码！'
-          this.tipsStyle1 = 'tips-err'
-          return false
-        }
-        else {
-          this.tips1 = ''
-          return true
-        }
-    },
-    async CheckPhone2() {
-        if (this. InData.phone_number.length !== 11){
-          this.tips2 = '请输入正确的电话号码！'
-          this.tipsStyle2 = 'tips-err'
-          return false
-        }
-        else {
-          this.tips2 = ''
-          return true
-        }
+      }
+    }
+    .introduce {
+      padding-top: 20px;
+      color: #fff;
     }
   }
 }
-</script>
+@keyframes mylogo {
+  0% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(0deg) scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+}
 
-<style scoped>
+@-moz-keyframes mylogo {
+  0% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(0deg) scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+}
 
-    ._body {
-      align-items: center;
-      background-color:  #e9e9e9;
-      background: url("../assets/back3.jpg");
-      /* 决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动。 */
-      /* https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment */
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      display: grid;
-      height: 100vh;
-      place-items: center;
-    }
+@-webkit-keyframes mylogo {
+  0% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(0deg) scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+}
 
-
-    .form__title {
-      font-weight: 300;
-      margin: 0;
-      margin-bottom: 1.25rem;
-    }
-
-    .link {
-      color: var(--gray);
-      font-size: 0.9rem;
-      margin: 1.5rem 0;
-      text-decoration: none;
-    }
-
-    .container {
-      background-color:  #e9e9e9;
-      border-radius: var(--button-radius);
-      box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
-        0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
-      height: 420px;
-      max-width: 758px;
-      overflow: hidden;
-      position: relative;
-      width: 100%;
-    }
-
-    .container__form {
-      height: 100%;
-      position: absolute;
-      top: 0;
-      transition: all 0.6s ease-in-out;
-    }
-
-    .container--signin {
-      left: 0;
-      width: 50%;
-      z-index: 2;
-    }
-
-    .container.right-panel-active .container--signin {
-      transform: translateX(100%);
-    }
-
-    .container--signup {
-      left: 0;
-      opacity: 0;
-      width: 50%;
-      z-index: 1;
-    }
-
-    .container.right-panel-active .container--signup {
-      animation: show 0.6s;
-      opacity: 1;
-      transform: translateX(100%);
-      z-index: 5;
-    }
-
-     .container__overlay {
-      height: 100%;
-      left: 50%;
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      transition: transform 0.6s ease-in-out;
-      width: 50%;
-      z-index: 100;
-    }
-
-    .container.right-panel-active .container__overlay {
-      transform: translateX(-100%);
-    }
-
-    .overlay {
-      background-color: var(--lightblue);
-      background: url("../assets/back3.jpg");
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      height: 100%;
-      left: -100%;
-      position: relative;
-      transform: translateX(0);
-      transition: transform 0.6s ease-in-out;
-      width: 200%;
-    }
-
-    .container.right-panel-active .overlay {
-      transform: translateX(50%);
-    }
-
-     .overlay__panel {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: center;
-      position: absolute;
-      text-align: center;
-      top: 0;
-      transform: translateX(0);
-      transition: transform 0.6s ease-in-out;
-      width: 50%;
-    }
-
-     .overlay--left {
-      transform: translateX(-20%);
-    }
-
-     .container.right-panel-active .overlay--left {
-      transform: translateX(0);
-    }
-
-     .overlay--right {
-      right: 0;
-      transform: translateX(0);
-    }
-
-     .container.right-panel-active .overlay--right {
-      transform: translateX(20%);
-    }
-
-     .btn {
-      background-color: var(--blue);
-      background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);
-      border-radius: 20px;
-      border: 1px solid var(--blue);
-      color: var(--white);
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: bold;
-      letter-spacing: 0.1rem;
-      padding: 0.9rem 4rem;
-      text-transform: uppercase;
-      transition: transform 80ms ease-in;
-    }
-
-    .form>.btn {
-      margin-top: 1.5rem;
-    }
-
-    .btn:active {
-      transform: scale(0.95);
-    }
-
-    .btn:focus {
-      outline: none;
-    }
-
-    .form {
-      background-color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 0 3rem;
-      height: 100%;
-      text-align: center;
-    }
-
-    .input {
-      background-color: #fff;
-      border: none;
-      padding: 0.9rem 0.9rem;
-      margin: 0.5rem 0;
-      width: 100%;
-    }
-
-    @keyframes show {
-
-      0%,
-      49.99% {
-        opacity: 0;
-        z-index: 1;
-      }
-
-      50%,
-      100% {
-        opacity: 1;
-        z-index: 5;
-      }
-    }
+@-o-keyframes mylogo {
+  0% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(0deg) scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+}
 </style>
+

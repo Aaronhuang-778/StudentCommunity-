@@ -13,6 +13,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "home" */ "./views/home.vue")
     },
     {
+      path:"/login/:user_id/:user_name",
+      name:"login",
+      props:true,
+      component:() => import("./views/Login.vue")
+    },
+    {
       path: "/ground",
       name: "ground",
       // route level code-splitting

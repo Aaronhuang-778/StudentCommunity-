@@ -106,6 +106,8 @@ export default class Articles extends Vue {
       ? "http://localhost:3001/articleDetail?article_id="
       : "https://biaochenxuying.cn/articleDetail?article_id=";
 
+  props: ['user_id', 'user_name'];
+
   // lifecycle hook
   mounted(): void {
     this.handleSearch();

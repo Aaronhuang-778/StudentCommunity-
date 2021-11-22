@@ -1,8 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app"
+       class="container">
     <Nav v-if="isShowNav" />
+    <div class=" layout">
       <router-view />
+      <Slider v-if="isShowSlider"></Slider>
+    </div>
     <ArrowUp></ArrowUp>
+    <Footer v-show="isShowNav"></Footer>
   </div>
 </template>
 <script lang="ts">
@@ -24,6 +29,7 @@ import ArrowUp from "@/components/arrowUp.vue"; // @ is an alias to /src
   }
 })
 export default class App extends Vue {
+
   private isShowNav: boolean = false;
   private isShowSlider: boolean = false;
   mounted(): void {
@@ -32,7 +38,7 @@ export default class App extends Vue {
   @Watch("$route")
   routeChange(val: Route, oldVal: Route): void {
     const referrer: any = document.getElementById("referrer");
-    if (val.path === "/") {
+    if (val.path === "/" || val.path === "/login") {
       this.isShowNav = false;
       referrer.setAttribute("content", "always");
     } else {
