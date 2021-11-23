@@ -83,7 +83,9 @@ export default {
     },
 
     InSubmit() {
-      this.$router.push("/nop");
+      let user_id = "0";
+      let user_name = "ty";
+      this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name}});
     },
 
     async CheckPassWords() {
