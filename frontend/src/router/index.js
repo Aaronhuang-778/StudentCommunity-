@@ -14,9 +14,11 @@ import message from '../../views/message'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
+    {path: '/', redirect: '/?#'},
     {
-      path: '/',
+      path: '/?#',
       name: 'newLog',
       component: newLog
     },

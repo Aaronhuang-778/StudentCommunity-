@@ -5,12 +5,12 @@
       <div class="container__form container--signup">
         <form action="#" class="form" id="form1">
           <h2 class="form__title">注册</h2>
-          <input type="text" placeholder="用户名" class="input" />
-          <input type="text" placeholder="手机号码" class="input" v-model="UpData.phone_number" @blur="CheckPhone2"/>
+          <input type="text" placeholder="用户名" class="input" v-model="UpData.user_name"/>
+          <input type="text" placeholder="手机号码" class="input" v-model="UpData.user_phone" @blur="CheckPhone2"/>
           <span :class="tipsStyle2">{{ tips2 }}</span>
           <input type="password" placeholder="密码" class="input" v-model= "UpData.password" @blur="CheckPassWords"/>
           <span :class="tipsStyle_p">{{ tips_p }}</span>
-          <button class="btn">注册</button>
+          <button class="btn" @click="signup">注册</button>
         </form>
       </div>
 
@@ -18,11 +18,11 @@
       <div class="container__form container--signin">
         <form action="#" class="form" id="form2">
           <h2 class="form__title">登录</h2>
-          <input type="text" placeholder="手机号码" class="input" v-model="InData.phone_number" @blur="CheckPhone1"/>
+          <input type="text" placeholder="手机号码" class="input" v-model="InData.user_phone" @blur="CheckPhone1"/>
           <span :class="tipsStyle1">{{ tips1 }}</span>
           <input type="password" placeholder="密码" class="input" v-model= "InData.password" />
           <a class="link">忘记密码请联系管理员找回密码</a>
-          <button class="btn" @click="InSubmit">登录</button>
+          <button class="btn" @click="signin">登录</button>
         </form>
       </div>
 
@@ -42,16 +42,19 @@
 </template>
 
 <script>
+import api from '../tools/user';
+
 export default {
   name: "newLogin",
   data() {
     return {
       InData: {
-        phone_number: '',
+        user_phone: '',
         password: ''
       },
       UpData: {
-        phone_number: '',
+        user_name:'',
+        user_phone: '',
         password: ''
       },
       tips1:'',//In
@@ -60,7 +63,6 @@ export default {
       tipsStyle2:'',
       tips_p:'',
       tipsStyle_p:'',
-
     }
   },
   methods: {
@@ -68,7 +70,7 @@ export default {
       addEventListener("click", () => {
         const container = document.querySelector(".container");
         container.classList.remove("right-panel-active");
-        this.data.UpData.phone_number = '';
+        this.data.UpData.user_phone = '';
         this.data.UpData.password = '';
       });
     },
@@ -77,30 +79,55 @@ export default {
       addEventListener("click", () => {
         const container = document.querySelector(".container");
         container.classList.add("right-panel-active");
-        this.data.InData.phone_number = '';
+        this.data.InData.user_phone = '';
         this.data.UpData.password = '';
       });
     },
 
-    InSubmit() {
-      let user_id = "0";
-      let user_name = "ty";
-      this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name}});
+    async signup() {
+      if (this.tips2 === '' && this.tips_p === ''){
+        let res = await api.register(this.$data);
+        if (res.data.code === 20000) {//20000，返回code
+          alert("注册成功");
+        } else {//40000
+          alert("用户名或手机号已存在");
+        }
+      }
+	    else {
+        alert("手机号或密码格式不符合要求");
+      }
+    },
+
+    async signin() {
+      if (this.tips1 === '') {
+        let res = await api.signin(this.$data);
+        if (res.data.code === 20000) {//20000，返回code
+          alert("登录成功");
+          let user_id = res.data.data.user_id;
+          let user_name = res.data.data.user_name;
+          this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name}});
+        } else {//40000
+          alert("手机号不存在或密码错误");
+        }
+      } else {
+        alert("手机号格式不符合要求");
+      }
+//      this.$router.push("/nop");
     },
 
     async CheckPassWords() {
-        if (this. InData.password.length < 8 || this. InData.password.length > 32){
+        if (this.UpData.password.length < 8 || this.UpData.password.length > 32){
           this.tips_p = '密码长度在8-32字符'
           this.tipsStyle_p = 'tips-err'
           return false
         }
         else {
-          this.tips = ''
+          this.tips_p= ''
           return true
         }
     },
     async CheckPhone1() {
-        if (this. InData.phone_number.length !== 11){
+        if (this.InData.user_phone.length !== 11){
           this.tips1 = '请输入正确的电话号码！'
           this.tipsStyle1 = 'tips-err'
           return false
@@ -111,7 +138,7 @@ export default {
         }
     },
     async CheckPhone2() {
-        if (this. InData.phone_number.length !== 11){
+        if (this.UpData.user_phone.length !== 11){
           this.tips2 = '请输入正确的电话号码！'
           this.tipsStyle2 = 'tips-err'
           return false

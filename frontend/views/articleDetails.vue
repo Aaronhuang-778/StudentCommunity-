@@ -4,7 +4,7 @@
         <div>
             <h1 id="title">{{ article.title }}</h1>
             <p id="subtitle">
-                本文由 {{ article.author.username }} 发布于 {{ formatted_time(article.created) }}
+                本文由 {{ article.user_name }} 发布于 {{ formatted_time(article.post_date) }}
             </p>
             <div v-html="article.body_html" class="article-body"></div>
         </div>
@@ -20,25 +20,31 @@
 <script>
     import axios from 'axios';
     import Comment from '../src/components/Comment'
+    import api from "../tools/user";
 
     export default {
         name: 'articleDetails',
-      props:["article_id", "user_id", "user_name"],
-      components: ["Comment"],
-        data: function () {
+        props:["article_id", "user_id", "user_name"],
+        components: ["Comment"],
+        data() {
             return {
                 article: null
             }
         },
-        mounted() {
-            axios
-                .get('/api/article/' + this.$route.params.id)
-                .then(response => (this.article = response.data))
+        async mounted() {
+            let res = await api.getPost(this.http());
+            this.article = res.data.data;
         },
         methods: {
             formatted_time: function (iso_date_string) {
                 const date = new Date(iso_date_string);
                 return date.toLocaleDateString()
+            },
+            http() {
+                return {
+                  user_id: this.user_id,
+                  post_id: this.article_id
+                }
             }
         }
     }
