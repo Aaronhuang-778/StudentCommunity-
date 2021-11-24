@@ -1,0 +1,15 @@
+{
+  "name": "buaa-talk",
+  "version": "1.0.0",
+  "description": "数据库大作业-航言",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/zhouziying8/buaa-talk.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
