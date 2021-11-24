@@ -1,5 +1,5 @@
 <template>
-  <el-container  style="height: 700px; border: 1px solid #eee">
+  <el-container  class="total">
 
     <lside :user_id="user_id" :user_name="user_name"> </lside>
 
@@ -42,25 +42,13 @@ export default {
 </script>
 
 <style scoped>
-.el-header, .el-footer {
-    background-color: #0e69e0;
-    color: #333;
-    text-align: center;
-  }
 
-  .el-main {
-    background-color: #c6e8ec;
-    color: #333;
-    text-align: center;
-  }
-
-   .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-  }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
+.total {
+  background: url("../src/assets/sky.jpg");
+  filter: alpha(opacity=50);
+  height: 700px;
+  border: 1px solid #eee
+}
 
 
 
