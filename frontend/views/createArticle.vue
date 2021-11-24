@@ -4,7 +4,7 @@
     <form>
       <div class="form-elem">
         <span>标题：</span>
-        <input v-model="title" type="text" placeholder="输入标题">
+        <input v-model="post_title" type="text" placeholder="输入标题">
       </div>
 
       <div class="form-elem">
@@ -19,7 +19,7 @@
                   :style="categoryStyle(category)"
                   @click.prevent="chooseCategory(category)"
                   >
-            {{category.title}}
+            {{category.post_title}}
           </button>
         </span>
       </div>
@@ -27,7 +27,7 @@
 
       <div class="form-elem">
         <span>正文：</span>
-        <textarea v-model="body" placeholder="输入正文" rows="20" cols="80"></textarea>
+        <textarea v-model="content" placeholder="输入正文" rows="20" cols="80"></textarea>
       </div>
 
       <div class="form-elem">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import api from '../tools/user';
   import axios from 'axios';
   // import authorization from '@/utils/authorization';
 
@@ -47,13 +48,13 @@
     data: function () {
       return {
         // 文章标题
-        title: '',
+        post_title: '',
         // 文章正文
-        body: '',
+        content: '',
         // 数据库中所有的分类
-        categories: [],
+        categories: [{id:1, post_title:'saa'}],
         // 选定的分类
-        selectedCategory: null,
+        selectedCategory: null
       }
     },
     mounted() {
@@ -87,50 +88,24 @@
           this.selectedCategory = category;
         }
       },
+      http() {
+        return {
+          post_title: this.post_title,
+          content: this.content,
+          keyword_id: 1,
+          user_id: this.user_id
+        }
+      },
       // 点击提交按钮
-      submit() {
-        const that = this;
-        // 前面封装的验证函数又用上了
-        authorization()
-          .then(function (response) {
-            if (response[0]) {
-              // 需要传给后端的数据字典
-              let data = {
-                title: that.title,
-                body: that.body,
-              };
-              // 添加分类
-              if (that.selectedCategory) {
-                data.category_id = that.selectedCategory.id
-              }
-              // 标签预处理
-              data.tags = that.tags
-                // 用逗号分隔标签
-                .split(/[,，]/)
-                // 剔除标签首尾空格
-                .map(x => x.trim())
-                // 剔除长度为零的无效标签
-                .filter(x => x.charAt(0) !== '');
-
-              // 将发表文章请求发送至接口
-              // 成功后前往详情页面
-              const token = localStorage.getItem('access.myblog');
-              axios
-                .post('/api/article/',
-                  data,
-                  {
-                        headers: {Authorization: 'Bearer ' + token}
-                    })
-                .then(function (response) {
-                    that.$router.push({name: 'ArticleDetail', params: {id: response.data.id}});
-              })
-            }
-            else {
-              alert('令牌过期，请重新登录。')
-            }
-          }
-        )
-      }
+      async submit() {
+        let res = await api.publishPost(this.http());
+        if (res.data.code === 20000) {
+          alert("发布成功");
+        }
+        else {
+          alert("发布失败");
+        }
+      },
     }
   }
 </script>
