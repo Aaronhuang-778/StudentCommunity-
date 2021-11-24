@@ -17,37 +17,37 @@
   </div>
 
   <br>
-  <p>已有 {{ comments.length }} 条评论</p>
+  <p>已有 {{ article.comment_number }} 条评论</p>
   <hr>
 
   <!-- 渲染所有评论内容 -->
   <div
        v-for="comment in comments"
-       :key="comment.id"
+       :key="comment.conmment_id"
        >
     <div class="comments">
       <div>
         <span class="username">
-          {{ comment.author.username }}
+          {{ comment.user_id }}
         </span>
         于
         <span class="created">
-          {{ formatted_time(comment.created) }}
+          {{ comment.comment_date }}
         </span>
-        <span v-if="comment.parent">
-          对
-          <span class="parent">
-            {{ comment.parent.author.username }}
-          </span>
-        </span>
+<!--        <span v-if="comment.parent">-->
+<!--          对-->
+<!--          <span class="parent">-->
+<!--            {{ comment.parent.author.username }}-->
+<!--          </span>-->
+<!--        </span>-->
         说道：
       </div>
       <div class="content">
         {{ comment.content }}
       </div>
-      <div>
-        <button class="commentBtn" @click="replyTo(comment)">回复</button>
-      </div>
+<!--      <div>-->
+<!--        <button class="commentBtn" @click="replyTo(comment)">回复</button>-->
+<!--      </div>-->
     </div>
     <hr>
   </div>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import api from '../tools/user';
   import axios from 'axios';
 
   export default {
@@ -69,7 +70,7 @@
         message: '',
         placeholder: '说点啥吧...',
         // 评论的评论
-        parentID: null
+        // parentID: null
       }
     },
     // 监听 article 对象
@@ -81,44 +82,57 @@
     },
     methods: {
       // 提交评论
-      submit() {
-        const that = this;
-        authorization()
-          .then(function (response) {
-            if (response[0]) {
-              axios
-                .post('/api/comment/',
-                  {
-                    content: that.message,
-                    article_id: that.article.id,
-                    parent_id: that.parentID,
-                  },
-                  {
-                    headers: {Authorization: 'Bearer ' + localStorage.getItem('access.myblog')}
-                  })
-                .then(function (response) {
-                  // 将新评论添加到顶部
-                  that.comments.unshift(response.data);
-                  that.message = '';
-                  alert('留言成功')
-                })
-            }
-            else {
-              alert('请登录后评论。')
-            }
-        })
+      http() {
+        return {
+          post_id:this.article.post_id,
+          user_id:this.article.user_id,
+          content:this.message
+        }
+      },
+      async submit() {
+        let res = await api.comment(this.http());
+        if (res.data.code===20000) {
+          alert("评论成功");
+        } else {
+          alert("评论失败");
+        }
+        // const that = this;
+        // authorization()
+        //   .then(function (response) {
+        //     if (response[0]) {
+        //       axios
+        //         .post('/api/comment/',
+        //           {
+        //             content: that.message,
+        //             article_id: that.article.id,
+        //             parent_id: that.parentID,
+        //           },
+        //           {
+        //             headers: {Authorization: 'Bearer ' + localStorage.getItem('access.myblog')}
+        //           })
+        //         .then(function (response) {
+        //           // 将新评论添加到顶部
+        //           that.comments.unshift(response.data);
+        //           that.message = '';
+        //           alert('留言成功')
+        //         })
+        //     }
+        //     else {
+        //       alert('请登录后评论。')
+        //     }
+        //})
       },
       // 对某条评论进行评论
       // 即二级评论
-      replyTo(comment) {
-        this.parentID = comment.id;
-        this.placeholder = '对' + comment.author.username + '说:'
-      },
+      // replyTo(comment) {
+      //   this.parentID = comment.id;
+      //   this.placeholder = '对' + comment.author.username + '说:'
+      // },
       // 修改日期显示格式
-      formatted_time: function (iso_date_string) {
-        const date = new Date(iso_date_string);
-        return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
-      },
+      // formatted_time: function (iso_date_string) {
+      //   const date = new Date(iso_date_string);
+      //   return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
+      // },
     }
   }
 </script>

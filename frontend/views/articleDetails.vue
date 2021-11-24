@@ -2,7 +2,7 @@
 
     <div v-if="article !== null" class="grid-container">
         <div>
-            <h1 id="title">{{ article.title }}</h1>
+            <h1 id="title">{{ article.post_title }}</h1>
             <p id="subtitle">
                 本文由 {{ article.user_name }} 发布于 {{ formatted_time(article.post_date) }}
             </p>

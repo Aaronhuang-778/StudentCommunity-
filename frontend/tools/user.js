@@ -15,6 +15,18 @@ export default {
       data
     })
   },
+  getPostList() {  // # 得到所有post
+    return request({
+      url: 'http://localhost:8000/api/getPostList',
+      method: 'get'
+    })
+  },
+  getKeywordList() {  // # 得到所有post
+    return request({
+      url: 'http://localhost:8000/api/getKeywordList',
+      method: 'get'
+    })
+  },
   getPost(data) {  // # 根据post_id得到post，结合user_id得到是否点赞和踩,-1表示没有
     return request({
       url: 'http://localhost:8000/api/getPost',
@@ -25,6 +37,20 @@ export default {
   publishPost(data) {  // # 根据post_id得到post，结合user_id得到是否点赞和踩,-1表示没有
     return request({
       url: 'http://localhost:8000/api/publishPost',
+      method: 'post',
+      data
+    })
+  },
+  message(data) {  // # 留言
+    return request({
+      url: 'http://localhost:8000/api/message',
+      method: 'post',
+      data
+    })
+  },
+  comment(data) {  // # 评论
+    return request({
+      url: 'http://localhost:8000/api/comment',
       method: 'post',
       data
     })

@@ -116,6 +116,11 @@ def getMyPostList(request):
     return myResponse(flag, res)
 
 
+def getKeywordList(request):
+    flag, res = tools.getKeywordList()
+    return myResponse(flag, res)
+
+
 def myResponse(flag, data=None):
     if flag:
         res = {"code": 20000, "data": data}

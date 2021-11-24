@@ -24,11 +24,11 @@ def signin(user_phone, password):
         return False, -1
 
 
-def publishPost(post_title, content, user_id, keyword_id):
+def publishPost(post_title, content, user_id, keyword):
     try:
-        keyword = Keyword.objects.filter(id=keyword_id)[0]
+        # keyword = Keyword.objects.filter(id=keyword_id)[0]
         post = Post.objects.create(post_title=post_title, content=content, user_id=user_id,
-                                   keyword_name=keyword.keyword_name)
+                                   keyword_name=keyword['keyword_name'])
         addsub(user_id, 'post_num', '+', 'User')
         return True, post.dict()
     except Exception as e:
@@ -136,9 +136,10 @@ def cancelfollow(follow_star_id):
         return False
 
 
-def message(send_user_id, receive_user_id, content):
+def message(send_user_id, receive_user_phone, content):
     try:
-        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=receive_user_id, content=content)
+        user = User.objects.filter(user_phone=receive_user_phone)[0]
+        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=user.id, content=content)
         return True, message.dict()
     except Exception as e:
         print(str(e))
@@ -202,6 +203,8 @@ def getPost(post_id, user_id):
         else:
             res["unlike_id"] = unlikes[0].id
         res["commment"] = commments
+        user_name = User.objects.filter(id=res['user_id'])[0].user_name
+        res['user_name'] = user_name
         return True, res
     except Exception as e:
         print(str(e))
@@ -212,7 +215,15 @@ def getPostList():
     try:
         res = {}
         post = Post.objects.all().order_by('-post_date')
-        posts = [i.dict() for i in post]
+        posts = []
+        for i in post:
+            p = i.dict()
+            user_name = User.objects.filter(id=p['user_id'])[0].user_name
+            p['user_name'] = user_name
+            labels = []
+            if p['keyword_name'] is not None:
+                labels.append(p['keyword_name'])
+            posts.append(p)
         res["post"] = posts
         return True, res
     except Exception as e:
@@ -227,6 +238,16 @@ def getMyPostList(user_id):
         posts = [i.dict() for i in post]
         res["post"] = posts
         return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+def getKeywordList():
+    try:
+        keyword = Keyword.objects.all()
+        keywords = [i.dict() for i in keyword]
+        return True, keywords
     except Exception as e:
         print(str(e))
         return False, None

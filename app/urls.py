@@ -21,4 +21,5 @@ urlpatterns = [
     re_path(r'^getPostList', views.getPostList),  # 得到所有post
     re_path(r'^getPost', views.getPost),  # 根据post_id得到post，结合user_id得到是否点赞和踩,-1表示没有
     re_path(r'^getMyPostList', views.getMyPostList),  # 得到user_id得到其post
+    re_path(r'^getKeywordList', views.getKeywordList),  # 得到keyword列表
 ]

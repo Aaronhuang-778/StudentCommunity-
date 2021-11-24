@@ -19,7 +19,7 @@
                   :style="categoryStyle(category)"
                   @click.prevent="chooseCategory(category)"
                   >
-            {{category.post_title}}
+            {{category.keyword_name}}
           </button>
         </span>
       </div>
@@ -52,16 +52,19 @@
         // 文章正文
         content: '',
         // 数据库中所有的分类
-        categories: [{id:1, post_title:'saa'}],
+        categories: [],
         // 选定的分类
         selectedCategory: null
       }
     },
-    mounted() {
+    async mounted() {
       // 页面初始化时获取所有分类
-      axios
-        .get('/api/category/')
-        .then(response => this.categories = response.data)
+      // axios
+      //   .get('/api/category/')
+      //   .then(response => this.categories = response.data)
+      let res = await api.getKeywordList();
+      // console.log(res.data.data);
+      this.categories = res.data.data;
     },
     methods: {
       // 根据分类是否被选中，按钮的颜色发生变化
@@ -92,7 +95,7 @@
         return {
           post_title: this.post_title,
           content: this.content,
-          keyword_id: 1,
+          keyword: this.selectedCategory,
           user_id: this.user_id
         }
       },

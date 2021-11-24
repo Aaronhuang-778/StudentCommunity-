@@ -1,16 +1,16 @@
 <template>
   <div id="content">
     <div class="article_wrap" v-for="(item,index) in articles" :key="index">
-      <div class="article_title" @click="goforDetail(item.id)"> {{item.title}}</div>
+      <div class="article_title" @click="goforDetail(item.post_id)"> {{item.post_title}}</div>
       <div class="article_info">
-        <span class="article_info_username">{{item.author}}</span>
-        <span class="article_info_date">发表时间：{{item.created_data}}</span>
+        <span class="article_info_username">{{item.user_name}}</span>
+        <span class="article_info_date">发表时间：{{item.post_date}}</span>
         <span class="article_info_date">标签：
           <span v-if="item.labels.length === 0">未分类</span>
-          <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{teg}}</el-tag>
+          <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>
         </span>
       </div>
-      <div class="article_gist">文章摘要：{{item.gist}}</div>
+      <div class="article_gist">文章摘要：{{item.content}}</div>
     </div>
   </div>
 
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+    import api from '../tools/user';
     import axios from 'axios';
     import Article from "./article";
 
@@ -51,27 +52,32 @@
                 articles:[]
             }
       },
-        mounted() {
+      async  mounted() {
+            let res = await api.getPostList();
+            let posts = res.data.data.post;
+            // console.log(posts);
+            this.articles = posts;
+            // console.log("---");
+            // console.log(this.articles[0].post_id);
             // axios
             //     .get('/api/article')
             //     .then(response => (this.info = response.data))
 
-
-          this.$https({
-            method: "post",
-            url: '-----',
-            data:{}
-          }).then(function (res){
-            this.articles = res.body.payload.article;
-            for(let i = 0;i < this.articles.length; i++) {
-              if (this.articles[i].labels.length > 0) {
-                this.articles[i].labels = this.articles[i].labels.split(',');
-                console.log(this.articles[i].labels.length);
-              }
-            }
-          }).catch(function (e){
-            this.$message.error("error!");
-          })
+          // this.$https({
+          //   method: "post",
+          //   url: '-----',
+          //   data:{}
+          // }).then(function (res){
+          //   this.articles = res.body.payload.article;
+          //   for(let i = 0;i < this.articles.length; i++) {
+          //     if (this.articles[i].labels.length > 0) {
+          //       this.articles[i].labels = this.articles[i].labels.split(',');
+          //       console.log(this.articles[i].labels.length);
+          //     }
+          //   }
+          // }).catch(function (e){
+          //   this.$message.error("error!");
+          // })
         },
         methods: {
             formatted_time: function (iso_date_string) {
@@ -79,7 +85,7 @@
                 return date.toLocaleDateString()
             },
           goforDetail(article_id) {
-              this.$router.push({ name: 'articleDetails', params: { article_id: article.id , user_id: this.user_id}});
+              this.$router.push({ name: 'articleDetails', params: { article_id: article_id , user_id: this.user_id}});
           }
         }
     }
