@@ -1,5 +1,5 @@
 <template>
-  <el-container  style="height: 700px; border: 1px solid #eee">>
+  <el-container  style="height: 700px; border: 1px solid #eee">
 
     <lside :user_id="user_id" :user_name="user_name"> </lside>
 

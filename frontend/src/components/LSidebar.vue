@@ -6,10 +6,21 @@
   </span>
   <el-dropdown-menu slot="dropdown">
     <el-dropdown-item >
-      <button @click="logout" style="border: none">logout</button>
+      <router-link :to="{name: 'newLog'}">
+        <li class="el-icon-house">
+            退出登录
+        </li>
+      </router-link>
+<!--      <button @click="logout" style="border: none">logout</button>-->
     </el-dropdown-item>
     <el-dropdown-item>
-      <button @click="editInformation" style="border: none">edit u information</button>
+      <router-link
+        :to="{name: 'userProfile', params: {user_id: this.user_id, user_name: this.user_name}}">
+        <li class="el-icon-setting">
+            个人资料
+        </li>
+      </router-link>
+<!--      <button @click="editInformation" style="border: none">edit u information</button>-->
     </el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
@@ -25,7 +36,7 @@
 <!--        </span>-->
 <!--      </el-menu-item>-->
       <el-menu-item index="1">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-reading"></i>
         <span slot="title">
           <router-link style="text-decoration: none"
                        :to="{name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}} ">帖子</router-link>
@@ -39,14 +50,14 @@
         </span>
       </el-menu-item>
       <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-edit"></i>
         <span slot="title">
           <router-link style="text-decoration: none"
                        :to="{name: 'message', params: {user_id: this.user_id, user_name: this.user_name}} ">留言</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-view"></i>
         <span slot="title">
           <router-link style="text-decoration: none"
                        :to="{name: 'about', params: {user_id: this.user_id, user_name: this.user_name}} ">关于</router-link>
