@@ -1,12 +1,13 @@
 <template>
-  <el-aside width="200px">
+  <el-aside width="150px">
   <el-dropdown>
-  <span >
-    <el-avatar :size="100" style="position: center"></el-avatar>
-  </span>
+    <div class="picture">
+      <img src="../assets/user_head.jpg"/>
+    </div>
+
   <el-dropdown-menu slot="dropdown">
     <el-dropdown-item >
-      <router-link :to="{name: 'newLog'}">
+      <router-link :to="{name: 'newLog'}" style="color: #333333">
         <li class="el-icon-house">
             退出登录
         </li>
@@ -15,7 +16,8 @@
     </el-dropdown-item>
     <el-dropdown-item>
       <router-link
-        :to="{name: 'userProfile', params: {user_id: this.user_id, user_name: this.user_name}}">
+        :to="{name: 'userProfile', params: {user_id: this.user_id, user_name: this.user_name}}"
+      style="color: #333333">
         <li class="el-icon-setting">
             个人资料
         </li>
@@ -28,7 +30,7 @@
       default-active="2"
       @open="handleOpen"
       @close="handleClose"
-    style="background-color: transparent">
+    style="background-color: transparent; border-right: 0;">
 <!--      <el-menu-item index="1">-->
 <!--        <i class="el-icon-menu"></i>-->
 <!--        <span slot="title">-->
@@ -37,30 +39,30 @@
 <!--        </span>-->
 <!--      </el-menu-item>-->
       <el-menu-item index="1">
-        <i class="el-icon-reading"></i>
+        <i class="el-icon-reading" style="color: aqua"></i>
         <span slot="title">
-          <router-link style="text-decoration: none"
+          <router-link style="text-decoration: none; color: black"
                        :to="{name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}} ">帖子</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="2">
-        <i class="el-icon-document"></i>
+        <i class="el-icon-document" style="color: aqua"></i>
         <span slot="title">
-          <router-link style="text-decoration: none"
+          <router-link style="text-decoration: none; color: black"
                        :to="{name: 'createArticle', params: {user_id: this.user_id, user_name: this.user_name}} ">发布</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="3">
-        <i class="el-icon-edit"></i>
+        <i class="el-icon-edit" style="color: aqua"></i>
         <span slot="title">
-          <router-link style="text-decoration: none"
+          <router-link style="text-decoration: none; color: black"
                        :to="{name: 'message', params: {user_id: this.user_id, user_name: this.user_name}} ">留言</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view" style="color: aqua"></i>
         <span slot="title">
-          <router-link style="text-decoration: none"
+          <router-link style="text-decoration: none; color: black"
                        :to="{name: 'about', params: {user_id: this.user_id, user_name: this.user_name}} ">关于</router-link>
         </span>
       </el-menu-item>
@@ -85,5 +87,14 @@ export default {
 </script>
 
 <style scoped>
+.picture {
+  width: 100px;
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+.picture > img {
+  max-width: 100%;
+  transform: rotate(-45deg) scale(1.42);
+}
 
 </style>

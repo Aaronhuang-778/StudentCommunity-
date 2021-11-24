@@ -15,5 +15,6 @@
     #header {
         text-align: center;
         margin-top: 20px;
+      height: 100%;
     }
 </style>

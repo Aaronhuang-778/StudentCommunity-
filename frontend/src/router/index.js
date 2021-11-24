@@ -41,7 +41,7 @@ export default new Router({
             component: articlelist
           },
         {
-      path: '/profile/articleDetails/:article_id/:user_id',
+      path: '/profile/articleDetails/:article_id/:user_id/:user_name',
       name: 'articleDetails',
       props: true,
       component: articleDetails

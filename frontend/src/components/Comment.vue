@@ -55,13 +55,13 @@
 </template>
 
 <script>
-  import api from '../tools/user';
+  import api from '../../tools/user';
   import axios from 'axios';
 
   export default {
     name: 'Comment',
     // 通过 props 获取当前文章
-    props: { article: Object },
+    props: {article: Object},
     data: function () {
       return {
         // 所有评论

@@ -32,6 +32,8 @@ export default {
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     }
   #app {
+    background: url("../src/assets/Sports.png");
+    background-size: 100% 100%;
     height: 100%;
     padding: 0;
     margin: 0;

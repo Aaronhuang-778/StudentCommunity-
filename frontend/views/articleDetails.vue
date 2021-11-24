@@ -1,19 +1,16 @@
 <template>
-
+    <div>
     <div v-if="article !== null" class="grid-container">
         <div>
             <h1 id="title">{{ article.post_title }}</h1>
             <p id="subtitle">
                 本文由 {{ article.user_name }} 发布于 {{ formatted_time(article.post_date) }}
             </p>
-            <div v-html="article.body_html" class="article-body"></div>
+            <div class="article-body">{{ article.content }}</div>
         </div>
-        <div>
-            <h3>目录</h3>
-            <div v-html="article.toc_html" class="toc"></div>
-        </div>
-        <Comment :artical="article"></Comment>
     </div>
+  <Comment :article="article"></Comment>
+      </div>
 
 </template>
 
@@ -24,7 +21,7 @@
 
     export default {
         name: 'articleDetails',
-        props:["article_id", "user_id", "user_name"],
+        props:["article_id", "user_id","user_name"],
         components: ["Comment"],
         data() {
             return {
@@ -54,6 +51,7 @@
     .grid-container {
         display: grid;
         grid-template-columns: 3fr 1fr;
+      position: center;
     }
 
 
@@ -67,10 +65,6 @@
         color: gray;
         font-size: small;
     }
-
-</style>
-
-<style>
     .article-body p img {
         max-width: 100%;
         border-radius: 50px;

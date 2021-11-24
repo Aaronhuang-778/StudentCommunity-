@@ -223,6 +223,7 @@ def getPostList():
             labels = []
             if p['keyword_name'] is not None:
                 labels.append(p['keyword_name'])
+            p['labels'] = labels
             posts.append(p)
         res["post"] = posts
         return True, res

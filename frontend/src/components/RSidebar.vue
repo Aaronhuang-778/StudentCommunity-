@@ -7,16 +7,18 @@
                     <button @click="search"></button>
                 </form>
             </div>
-      <div> {{ user_name }},你好</div>
-      <div>
-            <span
-                  v-for="tag in tags"
-                  v-bind:key="tag"
-                  class="tag"
-            >
-                {{ tag }}
-            </span>
-        </div>
+      <div style="text-align: center; font-size:20px"> {{ user_name }},你好</div>
+
+
+<!--      <div>-->
+<!--            <span-->
+<!--                  v-for="tag in tags"-->
+<!--                  v-bind:key="tag"-->
+<!--                  class="tag"-->
+<!--            >-->
+<!--                {{ tag }}-->
+<!--            </span>-->
+<!--        </div>-->
 
   </el-aside>
 

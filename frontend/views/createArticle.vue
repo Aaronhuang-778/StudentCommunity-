@@ -4,7 +4,8 @@
     <form>
       <div class="form-elem">
         <span>标题：</span>
-        <input v-model="post_title" type="text" placeholder="输入标题">
+        <input v-model="post_title" type="text" placeholder="输入标题"
+               style="background-color: transparent; border-width: 0; outline:none">
       </div>
 
       <div class="form-elem">
