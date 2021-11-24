@@ -1,7 +1,7 @@
 <template>
   <el-aside width="200px">
   <el-dropdown>
-  <span class="el-dropdown-link">
+  <span >
     <el-avatar :size="100" style="position: center"></el-avatar>
   </span>
   <el-dropdown-menu slot="dropdown">
@@ -27,7 +27,8 @@
     <el-menu
       default-active="2"
       @open="handleOpen"
-      @close="handleClose">
+      @close="handleClose"
+    style="background-color: transparent">
 <!--      <el-menu-item index="1">-->
 <!--        <i class="el-icon-menu"></i>-->
 <!--        <span slot="title">-->
@@ -73,18 +74,16 @@ export default {
   name: "LSidebar",
   props:["user_id", "user_name"],
   methods: {
-    logout() {
-      this.$router.push({name:"newLog"});
-    },
-    editInformation() {
-      this.$router.push({name:"userProfile", params: {user_id: this.user_id, user_name: this.user_name}});
-    }
+    // logout() {
+    //   this.$router.push({name:"newLog"});
+    // },
+    // editInformation() {
+    //   this.$router.push({name:"userProfile", params: {user_id: this.user_id, user_name: this.user_name}});
+    // }
   }
 }
 </script>
 
 <style scoped>
-
-
 
 </style>

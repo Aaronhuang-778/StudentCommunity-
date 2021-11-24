@@ -9,7 +9,7 @@
           <span>个人中心</span>
         </div>
           <div class="name-role">
-          <span class="sender">Admin - {{dataForm.nickName}}</span>
+          <span class="sender">Admin - {{user_name}}</span>
         </div>
         <div class="registe-info">
           <span class="registe-info">
@@ -20,13 +20,16 @@
         </div>
         <el-divider></el-divider>
         <div class="personal-relation">
-        <div class="relation-item">手机号:  <div style="float: right; padding-right:20px;">{{dataForm.phone}}</div></div>
+        <div class="relation-item">手机号:  <div style="float: right; padding-right:20px;">{{user_phone}}</div></div>
     </div>
     <div class="personal-relation">
-      <div class="relation-item">所属企业:  <div style="float: right; padding-right:20px;">杭州诚聚</div></div>
+      <div class="relation-item">发布文章数:  <div style="float: right; padding-right:20px;">{{post_num}}</div></div>
     </div>
        <div class="personal-relation">
-      <div class="relation-item">首页链接:  <div style="float: right; padding-right:20px;">{{dataForm.homeUrl}}</div></div>
+      <div class="relation-item">关注人数:  <div style="float: right; padding-right:20px;">{{star_num}}</div></div>
+    </div>
+     <div class="personal-relation">
+      <div class="relation-item">粉丝人数:  <div style="float: right; padding-right:20px;">{{follow_num}}</div></div>
     </div>
       </el-card>
         </div>
@@ -39,14 +42,22 @@
         </div>
         <div>
           <el-form label-width="80px" v-model="dataForm" size="small" label-position="right">
-          <el-form-item label="用户昵称" prop="nickName">
-          <el-input  auto-complete="off" v-model="dataForm.nickName"></el-input>
+          <el-form-item label="用户名" prop="nickName">
+          <el-input  auto-complete="off" v-model="dataForm.user_name"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
-          <el-input auto-complete="off" v-model="dataForm.phone"></el-input>
+          <el-input auto-complete="off" v-model="dataForm.user_phone"></el-input>
         </el-form-item>
-          <el-form-item label="首页链接" prop="homeUrl">
-          <el-input  maxlength="18" v-model="dataForm.homeUrl"></el-input>
+          <el-form-item label="头像" prop="picture">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -70,12 +81,35 @@ export default {
   data() {
     return {
       dataForm:{
-        nickName: '超级管理员',
-        phone: '173567777777',
-        homeUrl: 'http://www.baidu.com'
+        user_name: 'ty',
+        user_phone: '173567777777',
+        picture: ''
+      },
+      user_name: 'ty',
+      user_phone: '173567777777',
+      picture: '',
+      follow_num: '0',
+      star_num: '0',
+      post_num: '0',
+    }
+  },
+  methods: {
+      handleAvatarSuccess(res, file) {
+        this.picture = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     }
-  }
 }
 </script>
 
@@ -155,5 +189,29 @@ export default {
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
   }
 </style>
