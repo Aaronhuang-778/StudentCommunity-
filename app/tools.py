@@ -6,9 +6,9 @@ django.setup()
 from app.models import User, Post, Like, Unlike, Comment, Keyword, Follow_star, Message
 
 
-def register(user_name, user_phone, password, picture):
+def register(user_name, user_phone, password):
     try:
-        User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture=picture)
+        User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture='default')
         return True
     except Exception as e:
         print(str(e))

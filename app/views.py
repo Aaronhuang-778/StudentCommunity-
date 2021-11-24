@@ -9,12 +9,14 @@ from app import tools
 
 def register(request):
     data = json.loads(request.body)
+    data = data['UpData']
     flag = tools.register(**data)
     return myResponse(flag)
 
 
 def signin(request):
     data = json.loads(request.body)
+    data = data['InData']
     flag, res = tools.signin(**data)
     return myResponse(flag, res)
 
