@@ -84,12 +84,10 @@
 
 <script>
     import api from '../tools/user';
-    import axios from 'axios';
-    import Article from "./article";
+
 
     export default {
       name: 'articlelist',
-      components: {Article},
       props:["user_id", "user_name"],
       data() {
             return {

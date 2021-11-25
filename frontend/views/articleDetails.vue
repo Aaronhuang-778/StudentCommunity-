@@ -22,7 +22,9 @@
     export default {
         name: 'articleDetails',
         props:["article_id", "user_id","user_name"],
-        components: ["Comment"],
+        components: {
+          Comment
+        },
         data() {
             return {
                 article: null
