@@ -1,56 +1,60 @@
 <template>
   <div>
-  <br><br>
-  <hr>
-  <h3>发表评论</h3>
+    <el-divider></el-divider>
   <!-- 评论多行文本输入控件 -->
   <textarea
             v-model="message"
             :placeholder="placeholder"
             name="comment"
             id="comment-area"
-            cols="60"
+            cols="160"
             rows="10"
+            style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); background-color: transparent"
             ></textarea>
   <div>
     <button @click="submit" class="submitBtn">发布</button>
   </div>
 
-  <br>
-  <p>已有 {{ article.comment_number }} 条评论</p>
-  <hr>
-
-  <!-- 渲染所有评论内容 -->
-  <div
-       v-for="comment in comments"
-       :key="comment.conmment_id"
-       >
-    <div class="comments">
-      <div>
-        <span class="username">
-          {{ comment.user_id }}
-        </span>
-        于
-        <span class="created">
-          {{ comment.comment_date }}
-        </span>
-<!--        <span v-if="comment.parent">-->
-<!--          对-->
-<!--          <span class="parent">-->
-<!--            {{ comment.parent.author.username }}-->
-<!--          </span>-->
-<!--        </span>-->
-        说道：
-      </div>
-      <div class="content">
-        {{ comment.content }}
-      </div>
-<!--      <div>-->
-<!--        <button class="commentBtn" @click="replyTo(comment)">回复</button>-->
-<!--      </div>-->
-    </div>
-    <hr>
+  <el-divider></el-divider>
+    已有 {{ article.comment_number }} 条评论
+    <div class="infinite-list-wrapper" style="overflow:auto">
+    <ul
+      style="list-style: none"
+      v-infinite-scroll="load"
+      infinite-scroll-disabled="disabled">
+      <!-- 渲染所有评论内容 -->
+      <li v-for="comment in comments"
+       :key="comment.conmment_id">
+          <div class="comments">
+            <div>
+              <span class="username">
+                {{ comment.user_id }}
+              </span>
+              于
+              <span class="created">
+                {{ comment.comment_date }}
+              </span>
+      <!--        <span v-if="comment.parent">-->
+      <!--          对-->
+      <!--          <span class="parent">-->
+      <!--            {{ comment.parent.author.username }}-->
+      <!--          </span>-->
+      <!--        </span>-->
+              说道：
+            </div>
+            <div class="content">
+              {{ comment.content }}
+            </div>
+      <!--      <div>-->
+      <!--        <button class="commentBtn" @click="replyTo(comment)">回复</button>-->
+      <!--      </div>-->
+          </div>
+      </li>
+    </ul>
+    <p v-if="loading" style="font-size: small; font-family: 黑体">加载中...</p>
+    <p v-if="noMore" style="font-size: small; font-family: 黑体">没有更多了</p>
   </div>
+
   </div>
 </template>
 
@@ -71,6 +75,16 @@
         placeholder: '说点啥吧...',
         // 评论的评论
         // parentID: null
+        count: 10,
+        loading: false
+      }
+    },
+    computed: {
+      noMore () {
+        return this.count >= 20
+      },
+      disabled () {
+        return this.loading || this.noMore
       }
     },
     // 监听 article 对象
@@ -133,6 +147,13 @@
       //   const date = new Date(iso_date_string);
       //   return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
       // },
+      load () {
+        this.loading = true
+        setTimeout(() => {
+          this.count += 2
+          this.loading = false
+        }, 2000)
+      }
     }
   }
 </script>
@@ -142,13 +163,14 @@
     cursor: pointer;
     border: none;
     outline: none;
-    color: whitesmoke;
+    color: black;
     border-radius: 5px;
   }
   .submitBtn {
     height: 35px;
-    background: steelblue;
+    background:#e5e9f2;
     width: 60px;
+    size: inherit;
   }
   .commentBtn {
     height: 25px;

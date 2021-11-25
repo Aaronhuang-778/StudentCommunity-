@@ -1,21 +1,19 @@
 <template>
-
-  <el-aside width="200px">
-
-    <div class="search">
+<div>
+  <div class="search">
                 <form>
                     <input type="text" placeholder="输入搜索内容...">
                     <button @click="search"></button>
                 </form>
             </div>
 
-  </el-aside>
 
+</div>
 </template>
 
 <script>
 export default {
-  name: "RSidebar",
+  name: "Search",
   props:["user_id", "user_name"],
   data() {
     return {
@@ -32,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
- .search {
+.search {
         padding-top: 22px;
     }
 

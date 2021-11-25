@@ -10,6 +10,7 @@ import articleDetails from "../../views/articleDetails";
 import createArticle from '../../views/createArticle'
 import about from '../../views/about'
 import message from '../../views/message'
+import search from '../../views/Search'
 
 Vue.use(Router)
 
@@ -63,6 +64,12 @@ export default new Router({
             name: 'message',
           props:true,
             component: message
+        },
+        {
+          path: '/profile/search/:user_id/:user_name',
+            name: 'search',
+          props:true,
+            component: search
         }
       ]
     }

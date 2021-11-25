@@ -4,6 +4,10 @@
     <div class="picture">
       <img src="../assets/user_head.jpg"/>
     </div>
+    <br/>
+    <div style="text-align: center; font-size: medium">
+          {{user_name}}
+    </div>
 
   <el-dropdown-menu slot="dropdown">
     <el-dropdown-item >
@@ -60,12 +64,20 @@
         </span>
       </el-menu-item>
       <el-menu-item index="4">
+        <i class="el-icon-search" style="color: aqua"></i>
+        <span slot="title">
+          <router-link style="text-decoration: none; color: black"
+                       :to="{name: 'search', params: {user_id: this.user_id, user_name: this.user_name}} ">查找</router-link>
+        </span>
+      </el-menu-item>
+      <el-menu-item index="5">
         <i class="el-icon-view" style="color: aqua"></i>
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'about', params: {user_id: this.user_id, user_name: this.user_name}} ">关于</router-link>
         </span>
       </el-menu-item>
+
     </el-menu>
   </el-aside>
 

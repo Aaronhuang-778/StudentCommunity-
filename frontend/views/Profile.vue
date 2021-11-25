@@ -9,7 +9,6 @@
       <router-view></router-view>
     </el-main>
   </el-container>
-    <rside :user_id="user_id" :user_name="user_name"></rside>
 </el-container>
 </template>
 
@@ -40,7 +39,6 @@ export default {
 
 .total {
   height: 700px;
-  border: 1px solid #eee
 }
 
 
