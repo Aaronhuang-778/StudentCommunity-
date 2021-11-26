@@ -84,10 +84,11 @@ import api from "../tools/user";
 export default {
   name: "UserProfile",
   props:["user_id", "other_id"],
-  mounted: {
+  async mounted() {
     //this.user_id,this.other_id
     //return content
-
+      var res = await api.getUser({"user_id": this.user_id});
+      console.log(res.data.data);
   },
   data() {
     return {
