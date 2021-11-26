@@ -190,8 +190,8 @@ def getPost(post_id, user_id):
     try:
         post = Post.objects.filter(id=post_id)[0]
         res = post.dict()
-        commment = Comment.objects.filter(post_id=post_id)
-        commments = [i.dict() for i in commment]
+        comment = Comment.objects.filter(post_id=post_id)
+        comments = [i.dict() for i in comment]
         likes = Like.objects.filter(post_id=post_id, user_id=user_id)
         if len(likes) == 0:
             res["like_id"] = -1
@@ -202,7 +202,7 @@ def getPost(post_id, user_id):
             res["unlike_id"] = -1
         else:
             res["unlike_id"] = unlikes[0].id
-        res["commment"] = commments
+        res["commment"] = comments
         user_name = User.objects.filter(id=res['user_id'])[0].user_name
         res['user_name'] = user_name
         return True, res

@@ -24,7 +24,7 @@
       infinite-scroll-disabled="disabled">
       <!-- 渲染所有评论内容 -->
       <li v-for="comment in comments"
-       :key="comment.conmment_id">
+       :key="comment.comment_id">
           <div class="comments">
             <div>
               <span class="username">
@@ -91,7 +91,7 @@
     // 以便实时更新评论
     watch: {
       article() {
-        this.comments = this.article !== null ? this.article.comments : []
+        this.comments = this.article !== null ? this.article.comment : []
       }
     },
     methods: {
