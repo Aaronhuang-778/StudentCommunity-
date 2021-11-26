@@ -136,10 +136,10 @@ def cancelfollow(follow_star_id):
         return False
 
 
-def message(send_user_id, receive_user_phone, content):
+def message(send_user_id, receive_user_id, content):
     try:
-        user = User.objects.filter(user_phone=receive_user_phone)[0]
-        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=user.id, content=content)
+        # user = User.objects.filter(user_id=receive_user_id)[0]
+        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=receive_user_id, content=content)
         return True, message.dict()
     except Exception as e:
         print(str(e))
@@ -178,7 +178,12 @@ def getUser(user_id):
         user = User.objects.filter(id=user_id)[0]
         res = user.dict()
         message = Message.objects.filter(receive_user_id=user_id)
-        messages = [i.dict() for i in message]
+        messages = []
+        for i in message:
+            temp = i.dict()
+            send_user_name = User.objects.filter(id=temp['send_user_id'])[0].user_name
+            temp['send_user_name'] = send_user_name
+            messages.append(temp)
         res["message"] = messages
         return True, res
     except Exception as e:
@@ -191,7 +196,14 @@ def getPost(post_id, user_id):
         post = Post.objects.filter(id=post_id)[0]
         res = post.dict()
         comment = Comment.objects.filter(post_id=post_id)
-        comments = [i.dict() for i in comment]
+        comments = []
+        for i in comment:
+            temp = i.dict()
+            user_name = User.objects.filter(id=temp['user_id'])[0].user_name
+            print(user_name)
+            temp['user_name'] = user_name
+            comments.append(temp)
+        res["comment"] = comments
         likes = Like.objects.filter(post_id=post_id, user_id=user_id)
         if len(likes) == 0:
             res["like_id"] = -1
@@ -202,7 +214,6 @@ def getPost(post_id, user_id):
             res["unlike_id"] = -1
         else:
             res["unlike_id"] = unlikes[0].id
-        res["commment"] = comments
         user_name = User.objects.filter(id=res['user_id'])[0].user_name
         res['user_name'] = user_name
         return True, res

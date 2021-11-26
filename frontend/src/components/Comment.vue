@@ -28,11 +28,11 @@
           <div class="comments">
             <div>
               <span class="username">
-                {{comment.user_id}}
+                {{ comment.user_name }}
               </span>
               于
               <span class="created">
-                {{comment.comment_date}}
+                {{ comment.comment_date }}
               </span>
       <!--        <span v-if="comment.parent">-->
       <!--          对-->
@@ -91,7 +91,7 @@
     // 以便实时更新评论
     watch: {
       article() {
-        this.comments = this.article !== null ? this.article.comment : []
+        this.comments = this.article !== null ? this.article.comment : [];
       }
     },
     methods: {
@@ -106,6 +106,7 @@
       async submit() {
         let res = await api.comment(this.http());
         if (res.data.code===20000) {
+
           alert("评论成功");
         } else {
           alert("评论失败");

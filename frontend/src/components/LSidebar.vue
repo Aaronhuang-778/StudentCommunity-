@@ -13,7 +13,7 @@
 
     <el-dropdown-item>
       <router-link
-        :to="{name: 'userProfile', params: {user_id: this.user_id, other_id: this.user_id}}"
+        :to="{name: 'userProfile', params: {user_id: this.user_id,user_name: this.user_name, other_id: this.user_id}}"
       style="color: #333333">
         <li class="el-icon-house">
             个人主页
