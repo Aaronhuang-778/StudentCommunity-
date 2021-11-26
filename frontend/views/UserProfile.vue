@@ -49,7 +49,7 @@
         <el-card v-for="(item,index) in messages" :key="index" style="background: transparent">
           <div class="tabloid">
             {{item.content}}
-            <el-button @click="deleteMessage(item.message_id)" style="float: right; size: 10px">删除</el-button>
+            <el-button @click="deleteMessage(item.message_id)" style="float: right; size: 10px" type="danger">删除</el-button>
           </div>
           <i class="el-icon-user-solid article-icon">{{item.send_user_name}}</i>
           <i class="el-icon-date article-icon">

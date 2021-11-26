@@ -16,7 +16,7 @@
 <!--                <span v-if="item.labels.length === 0">未分类</span>-->
 <!--                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>-->
               </span>
-              <el-button @click="deleteArticles(item.post_id)" style="float: right; size: 20px">删除</el-button>
+              <el-button @click="deleteArticles(item.post_id)" style="float: right; size: 10px" type="danger">删除</el-button>
             </div>
           </div>
           <div class="tabloid">{{brief(item.content)}}</div>
