@@ -41,7 +41,7 @@ export default {
   },
   async  mounted() {
     //my articles!!!
-            let res = await api.getPostList();
+            let res = await api.getMyPostList({"user_id": this.user_id});
             let posts = res.data.data.post;
             console.log(posts);
             this.articles = posts;
