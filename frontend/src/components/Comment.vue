@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import api from '../tools/user';
+  import api from '../../tools/user';
   import axios from 'axios';
 
   export default {
