@@ -1,4 +1,6 @@
 import os
+from random import randint
+
 import django
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'BuaaTalk.settings'
@@ -6,9 +8,14 @@ django.setup()
 from app.models import User, Post, Like, Unlike, Comment, Keyword, Follow_star, Message
 
 
-def register(user_name, user_phone, password):
+def register(user_name, user_phone, password, sex):
     try:
-        User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture='default')
+        if sex == 0:
+            picture = randint(4, 6)
+        else:
+            picture = randint(1, 3)
+        picture = str(picture)
+        User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture=picture)
         return True
     except Exception as e:
         print(str(e))
