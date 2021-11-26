@@ -1,4 +1,6 @@
 import os
+from random import randint
+
 import django
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'BuaaTalk.settings'
@@ -26,4 +28,5 @@ class test(TestCase):
         # post = Post.objects.filter(id=1)[0]
         # print(post.__dict__)
         # print(Like.objects.all())
-        tools.getUser(3)
+        # tools.getUser(3)
+        print(randint(1,3))
