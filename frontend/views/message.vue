@@ -1,14 +1,14 @@
 <template>
 <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
-  <el-form-item label="目标手机号" prop="name">
+  <el-form-item label="目标手机号" prop="name" >
     <el-input v-model="ruleForm.phone"></el-input>
   </el-form-item>
   <el-form-item label="留言内容" prop="content">
-    <el-input type="textarea" v-model="ruleForm.content"></el-input>
+    <el-input type="textarea" v-model="ruleForm.content" style="background: transparent"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">发送</el-button>
-    <el-button @click="resetForm('ruleForm')">重置</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee">发送</el-button>
+    <el-button @click="resetForm('ruleForm')" style="background: #e5e9f2">重置</el-button>
   </el-form-item>
 </el-form>
 </template>

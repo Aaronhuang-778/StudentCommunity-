@@ -1,22 +1,21 @@
 <template>
 <div>
-  {{user_name}}信息
       <el-row :gutter="20" style="margin-top:10px;">
         <el-col :span="8">
             <div class="grid-content bg-purple">
                  <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>个人中心</span>
+          <span>基本信息</span>
         </div>
           <div class="name-role">
-          <span class="sender">Admin - {{user_name}}</span>
+          <span class="sender">{{this.user_name}}</span>
         </div>
         <div class="registe-info">
-          <span class="registe-info">
-            注册时间：
-            <li class="fa fa-clock-o"></li>
-             2020/4/10 9:40:33
-          </span>
+<!--          <span class="registe-info">-->
+<!--            注册时间：-->
+<!--            <li class="fa fa-clock-o"></li>-->
+<!--             2020/4/10 9:40:33-->
+<!--          </span>-->
         </div>
         <el-divider></el-divider>
         <div class="personal-relation">
@@ -36,78 +35,122 @@
         </el-col>
     <el-col :span="16">
         <div class="grid-content bg-purple">
-       <el-card class="box-card">
+
+
+       <el-card class="box-card" v-if="isSelf() === true">
         <div slot="header" class="clearfix">
-          <span>基本资料</span>
+          <span>留言栏</span>
         </div>
-        <div>
-          <el-form label-width="80px" v-model="dataForm" size="small" label-position="right">
-          <el-form-item label="用户名" prop="nickName">
-          <el-input  auto-complete="off" v-model="dataForm.user_name"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input auto-complete="off" v-model="dataForm.user_phone"></el-input>
-        </el-form-item>
-          <el-form-item label="头像" prop="picture">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-          <el-button size="mini" type="primary">提交</el-button>
-          <el-button size="mini" type="warning" >关闭</el-button>
-        </div>
-        </div>
+        <el-card v-for="(item,index) in messages" :key="index" style="background: transparent">
+          <div class="tabloid">{{item.content}}</div>
+          <i class="el-icon-user-solid article-icon">{{item.user_name}}</i>
+          <i class="el-icon-date article-icon">
+            {{formatted_time(item.post_date)}}
+          </i>
+        </el-card>
       </el-card>
+
+      <el-card class="box-card" v-else>
+        <div slot="header" class="clearfix">
+          <span style="width: 100px; float: left">说点什么</span>
+          <span style="width: 100px; float: right" v-if="isFollow === false">
+            <i class="el-icon-star-off" @click="followClick" > 关注</i>
+            </span>
+          <span style="width: 100px; float: right" v-else>
+            <i class="el-icon-star-on" @click="followReset"> 取消关注</i>
+            </span>
+        </div>
+        <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="留言内容" prop="content">
+            <el-input type="textarea" v-model="ruleForm.content" style="background: transparent"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee; size: 6px">发送</el-button>
+            <el-button @click="resetForm('ruleForm')" style="background: #e5e9f2" size="6px">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+
         </div>
         </el-col>
-
       </el-row>
 
 </div>
 </template>
 
 <script>
+import api from "../tools/user";
+
 export default {
   name: "UserProfile",
-  props:["user_id", "user_name"],
+  props:["user_id", "other_id"],
+  mounted: {
+    //this.user_id,this.other_id
+    //return content
+
+  },
   data() {
     return {
-      dataForm:{
-        user_name: 'ty',
-        user_phone: '173567777777',
-        picture: ''
-      },
+      // dataForm:{
+      //   user_name: 'ty',
+      //   user_phone: '173567777777',
+      //   picture: ''
+      // },
+      isFollow: false,
+      messages:[{
+        content: "hello!",
+        user_name: "zzy",
+        post_data: "0"
+      },{
+        content: "hello!",
+        user_name: "hw",
+        post_data: "0"
+      }],
       user_name: 'ty',
       user_phone: '173567777777',
-      picture: '',
+      // picture: '',
       follow_num: '0',
       star_num: '0',
       post_num: '0',
+      ruleForm: {
+          content: ''
+      }
     }
   },
   methods: {
-      handleAvatarSuccess(res, file) {
-        this.picture = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+          formatted_time: function (iso_date_string) {
+            const date = new Date(iso_date_string);
+            return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
+          },
+          isSelf() {
+            return this.user_id === this.other_id;
+          },
+          followClick() {
+            this.isFollow = true;
+            //call
+          },
+          followReset() {
+            this.isFollow = false;
+            // call
+          },
 
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+    http() {
+        return {
+          send_user_id: this.user_id,
+          receive_user_phone: this.ruleForm.phone,
+          content: this.ruleForm.content
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+      },
+      async submitForm(formName) {
+        let res = await api.message(this.http());
+        if(res.data.code === 20000){
+          alert("留言成功");
+        } else{
+          alert("留言失败");
         }
-        return isJPG && isLt2M;
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
 }
@@ -214,4 +257,22 @@ export default {
     height: 178px;
     display: block;
   }
+
+  .tabloid {
+  color: black;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+  .article-icon,
+.article-icon .tag {
+  color: black;
+  font-size: 13px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.article-icon .tag:hover {
+  color: black;
+  cursor: pointer;
+}
 </style>

@@ -1,38 +1,34 @@
 <template>
 
-  <el-aside width="200px">
-
-    <div class="search">
+<div>
+  <div class="search">
                 <form>
                     <input type="text" placeholder="输入搜索内容...">
                     <button @click="search"></button>
                 </form>
             </div>
 
-  </el-aside>
-
+</div>
 </template>
 
 <script>
 export default {
-  name: "RSidebar",
-  props:["user_id", "user_name"],
+  name: "search",
+
   data() {
     return {
-        tags: ["compile", "database"],
+
     }
   },
 
   methods: {
-    search() {
-      this.$router.push({name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}});
-    }
+
   }
 }
 </script>
 
 <style scoped>
- .search {
+.search {
         padding-top: 22px;
     }
 
@@ -87,3 +83,5 @@ export default {
         color: white;
     }
 </style>
+
+

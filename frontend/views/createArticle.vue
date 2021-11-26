@@ -4,7 +4,8 @@
     <form>
       <div class="form-elem">
         <span>标题：</span>
-        <input v-model="post_title" type="text" placeholder="输入标题">
+        <input v-model="post_title" type="text" placeholder="输入标题"
+               style="background-color: transparent; border-width: 0; outline:none">
       </div>
 
       <div class="form-elem">
@@ -27,11 +28,11 @@
 
       <div class="form-elem">
         <span>正文：</span>
-        <textarea v-model="content" placeholder="输入正文" rows="20" cols="80"></textarea>
+        <textarea v-model="content" placeholder="输入正文" rows="20" cols="80" style="background: transparent"></textarea>
       </div>
 
       <div class="form-elem">
-        <button v-on:click.prevent="submit">提交</button>
+        <button v-on:click.prevent="submit" style="background: #e5e9f2; color: #333333">提交</button>
       </div>
     </form>
   </div>
@@ -72,11 +73,11 @@
       categoryStyle(category) {
         if (this.selectedCategory !== null && category.id === this.selectedCategory.id) {
           return {
-            backgroundColor: 'black',
+            backgroundColor: 'pink',
           }
         }
         return {
-          backgroundColor: 'lightgrey',
+          backgroundColor: 'grey',
           color: 'black',
         }
       },

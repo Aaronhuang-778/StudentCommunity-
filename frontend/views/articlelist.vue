@@ -1,51 +1,59 @@
 <template>
-  <div id="content">
-    <div class="article_wrap" v-for="(item,index) in articles" :key="index">
-      <div class="article_title" @click="goforDetail(item.post_id)"> {{item.post_title}}</div>
-      <div class="article_info">
-        <span class="article_info_username">{{item.user_name}}</span>
-        <span class="article_info_date">发表时间：{{item.post_date}}</span>
-        <span class="article_info_date">标签：
-          <span v-if="item.labels.length === 0">未分类</span>
-          <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>
-        </span>
+   <div>
+      <div>
+        <div class="search">
+          <form>
+              <input type="text" placeholder="输入搜索内容...">
+              <button ></button>
+          </form>
+        </div>
       </div>
-      <div class="article_gist">文章摘要：{{item.content}}</div>
-    </div>
+    <el-row :gutter="25" style="background-image: image('../src/assets/seesky.jpg')">
+      <el-col :span="20" :offset="2"  >
+        <el-card v-for="(item,index) in articles" :key="index" style="background: transparent">
+          <div slot="header">
+            <div class="main-text" @click="goforDetail(item.post_id)">
+              {{item.post_title}}
+            </div>
+
+            <div class="article-info">
+              <el-tag effect="dark" size="mini">原创</el-tag>
+              浏览量：0
+              <span class="article_info_date">标签：
+                <el-tag  class="tag_margin"  >{{item.keyword_name}}</el-tag>
+<!--                <span v-if="item.labels.length === 0">未分类</span>-->
+<!--                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>-->
+              </span>
+            </div>
+          </div>
+          <div class="tabloid">{{brief(item.content)}}</div>
+          <i class="el-icon-user-solid article-icon" @click="goforMan(item.user_id)">
+              {{item.user_name}}
+          </i>
+          <i class="el-icon-date article-icon">
+            {{formatted_time(item.post_date)}}
+          </i>
+<!--          <i class="el-icon-price-tag article-icon">-->
+<!--            <router-link-->
+<!--              class="tag"-->
+<!--              v-for="(tag,index) in article.tags"-->
+<!--              :key="index"-->
+<!--              v-text="tag"-->
+<!--              :to="'/tag/'+tag"-->
+<!--            ></router-link>-->
+<!--          </i>-->
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
-
-<!--  <div>-->
-<!--    <div v-for="article in info.results" v-bind:key="article.url" id="articles">-->
-<!--        <div>-->
-<!--            <span-->
-<!--                  v-for="tag in article.tags"-->
-<!--                  v-bind:key="tag"-->
-<!--                  class="tag"-->
-<!--            >-->
-<!--                {{ tag }}-->
-<!--            </span>-->
-<!--        </div>-->
-<!--         <router-link-->
-<!--                :to="{ name: 'articleDetails', params: { article_id: article.id , user_id: this.user_id}}"-->
-<!--                class="article-title"-->
-<!--        >-->
-<!--            {{ article.title }}-->
-<!--        </router-link>-->
-
-<!--        <div>{{ formatted_time(article.created) }}</div>-->
-<!--    </div>-->
-<!--    </div>-->
 
 </template>
 
 <script>
     import api from '../tools/user';
-    import axios from 'axios';
-    import Article from "./article";
 
     export default {
       name: 'articlelist',
-      components: {Article},
       props:["user_id", "user_name"],
       data() {
             return {
@@ -55,126 +63,141 @@
       async  mounted() {
             let res = await api.getPostList();
             let posts = res.data.data.post;
-            // console.log(posts);
+            console.log(posts);
             this.articles = posts;
-            // console.log("---");
-            // console.log(this.articles[0].post_id);
-            // axios
-            //     .get('/api/article')
-            //     .then(response => (this.info = response.data))
+            console.log("---");
+            console.log(this.articles.data);
 
-          // this.$https({
-          //   method: "post",
-          //   url: '-----',
-          //   data:{}
-          // }).then(function (res){
-          //   this.articles = res.body.payload.article;
-          //   for(let i = 0;i < this.articles.length; i++) {
-          //     if (this.articles[i].labels.length > 0) {
-          //       this.articles[i].labels = this.articles[i].labels.split(',');
-          //       console.log(this.articles[i].labels.length);
-          //     }
-          //   }
-          // }).catch(function (e){
-          //   this.$message.error("error!");
-          // })
         },
         methods: {
-            formatted_time: function (iso_date_string) {
-                const date = new Date(iso_date_string);
-                return date.toLocaleDateString()
-            },
+          formatted_time(iso_date_string) {
+            console.log(iso_date_string);
+            const date = new Date(iso_date_string);
+            return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
+          },
           goforDetail(article_id) {
-              this.$router.push({ name: 'articleDetails', params: { article_id: article_id , user_id: this.user_id}});
+              this.$router.push({
+                name: 'articleDetails', params: { article_id: article_id , user_id: this.user_id, user_name: this.user_name}});
+          },
+          brief(content) {
+            return content.substr(0, 35) + '...';
+          },
+          goforMan(other_id) {
+            this.$router.push({name: 'userProfile', params: {user_id: this.user_id, other_id: other_id}});
+          },
+          search() {
+            //fetch list
           }
         }
     }
-
 </script>
 
 <!-- "scoped" 使样式仅在当前组件生效 -->
 <style scoped>
-    #articles {
-        padding: 10px;
+
+
+    .item-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.carimg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}
+.desc-box {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  top: 50%;
+  width: 500px;
+  height: 40px;
+  margin-left: -250px;
+  margin-top: -20px;
+  text-align: center;
+}
+.el-card {
+  margin-top: 20px;
+}
+.article-info {
+  margin-top: 10px;
+  color: black;
+  font-size: 13px;
+}
+.article-icon,
+.article-icon .tag {
+  color: black;
+  font-size: 13px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.article-icon .tag:hover {
+  color: black;
+  cursor: pointer;
+}
+.tabloid {
+  color: black;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.search {
+        padding-top: 22px;
     }
 
-    .article-title {
-        font-size: large;
-        font-weight: bolder;
-        color: black;
-        text-decoration: none;
-        padding: 5px 0 5px 0;
+    * {
+        box-sizing: border-box;
     }
 
-    .tag {
-        padding: 2px 5px 2px 5px;
-        margin: 5px 5px 5px 0;
-        font-family: Georgia, Arial, sans-serif;
-        font-size: small;
-        background-color: #4e4e4e;
-        color: whitesmoke;
+    form {
+        position: relative;
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    input, button {
+        border: none;
+        outline: none;
+    }
+
+    input {
+        width: 100%;
+        height: 35px;
+        padding-left: 13px;
+        padding-right: 46px;
+    }
+
+    button {
+        height: 35px;
+        width: 35px;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    .search input {
+        border: 2px solid gray;
         border-radius: 5px;
+        background: transparent;
+        top: 0;
+        right: 0;
     }
 
-    .article_wrap {
-      padding: 20px;
-    }
-    .article_title {
-      display: inline-block;
-      color: white;
-      font-size: 22px;
-      font-weight: 600;
-      cursor: pointer;
+    .search button {
+        background: gray;
+        border-radius: 0 5px 5px 0;
+        width: 45px;
+        top: 0;
+        right: 0;
     }
 
-    .article_title:hover {
-      border-bottom: 1px solid #222;
-      color: black;
-      background: white;
+    .search button:before {
+        content: "搜索";
+        font-size: 13px;
+        color: white;
     }
 
-    .article_info {
-      color: white;
-      font-size: 14px;
-      padding-top: 8px;
-      margin-top: 10px;
-    }
 
-    .article_info_username {
-      margin-right: 10px;
-    }
-
-    .article_info_date {
-      margin-right: 10px;
-    }
-
-    .tag_margin {
-      margin: 3px;
-    }
-
-    .article_gist {
-      text-align: center;
-      margin-top: 10px;
-      padding-top: 40px;
-      padding-bottom: 40px;
-      font-size: 16px;
-      color: white;
-    }
-
-    .article_button {
-      display: inline-block;
-      padding: 3px 12px;
-      border: 2px solid black;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .article_all:hover {
-      color: white;
-      background: #000;
-      font-weight: 600;
-    }
 
 </style>
