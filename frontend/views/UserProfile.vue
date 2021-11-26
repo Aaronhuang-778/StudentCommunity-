@@ -19,7 +19,7 @@
         <div style="float:left;width: 33%; text-align: center">
             粉丝人数:{{follow_num}}
         </div>
-         <div style="float:left;width: 33%; text-align: center"  v-if="isSelf() === false">
+         <div style="float:left;width: 33%; text-align: center"  v-show="this.user_id != this.other_id">
             <span style="width: 100px; float: right" v-if="isFollow === false">
             <i class="el-icon-star-off" @click="followClick" > 关注</i>
             </span>
@@ -42,7 +42,7 @@
         <div class="grid-content bg-purple">
 
 
-       <el-card class="box-card" v-if="isSelf() === true">
+       <el-card class="box-card" v-show="this.user_id == this.other_id">
         <div slot="header" class="clearfix">
           <span>留言栏</span>
         </div>
@@ -58,7 +58,7 @@
         </el-card>
       </el-card>
 
-      <el-card class="box-card" v-else>
+      <el-card class="box-card" v-show="this.user_id != this.other_id">
         <div slot="header" class="clearfix">
           <span style="width: 100px; float: left">说点什么</span>
         </div>
