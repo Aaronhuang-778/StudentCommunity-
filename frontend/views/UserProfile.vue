@@ -47,7 +47,10 @@
           <span>留言栏</span>
         </div>
         <el-card v-for="(item,index) in messages" :key="index" style="background: transparent">
-          <div class="tabloid">{{item.content}}</div>
+          <div class="tabloid">
+            {{item.content}}
+            <el-button @click="deleteMessage(item.message_id)" style="float: right; size: 10px">删除</el-button>
+          </div>
           <i class="el-icon-user-solid article-icon">{{item.send_user_name}}</i>
           <i class="el-icon-date article-icon">
             {{formatted_time(item.message_date)}}
@@ -82,13 +85,11 @@ import api from "../tools/user";
 
 export default {
   name: "UserProfile",
-  props:["user_id", "other_id"],
+  props:["user_id","user_name", "other_id"],
   async mounted() {
     //this.user_id,this.other_id
     //return content
-    let topass = this.user_id;
-    if (this.user_id !== this.other_id)
-      topass = this.other_id;
+    let topass = this.other_id;
       let res = await api.getUser({"user_id": topass});
       console.log(res.data.data);
     this.user_name = res.data.data.user_name;
@@ -127,6 +128,17 @@ export default {
     }
   },
   methods: {
+          async fetchlist() {
+            let topass = this.other_id;
+            let res = await api.getUser({"user_id": topass});
+            console.log(res.data.data);
+           this.messages = res.data.data.message;
+          },
+
+          async deleteMessage(message_id) {
+            let res = await api.cancelmessage({"message_id": message_id});
+            this.fetchlist();
+          },
           formatted_time: function (iso_date_string) {
             const date = new Date(iso_date_string);
             return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
@@ -134,13 +146,15 @@ export default {
           isSelf() {
             return this.user_id === this.other_id;
           },
-          followClick() {
+          async followClick() {
             this.isFollow = true;
+            let res = await api.follow({"follow_id":this.user_id, "star_id":this.other_id});
             //call
           },
-          followReset() {
+          async followReset() {
             this.isFollow = false;
             // call
+            let res = await api.cancelfollow({"follow_id": this.user_id, "star_id": this.other_id});
           },
 
     http() {

@@ -29,7 +29,7 @@ export default new Router({
       component: profile,
       children: [
           {
-            path: '/profile/userProfile/:user_id/:other_id',
+            path: '/profile/userProfile/:user_id/:user_name/:other_id',
             name: 'userProfile',
             props: true,
             component: userProfile

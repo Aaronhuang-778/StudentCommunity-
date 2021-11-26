@@ -16,6 +16,7 @@
 <!--                <span v-if="item.labels.length === 0">未分类</span>-->
 <!--                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>-->
               </span>
+              <el-button @click="deleteArticles(item.post_id)" style="float: right; size: 20px">删除</el-button>
             </div>
           </div>
           <div class="tabloid">{{brief(item.content)}}</div>
@@ -39,17 +40,23 @@ export default {
             articles:[]
         }
   },
-  async  mounted() {
+  mounted() {
     //my articles!!!
+    this.fetchlist();
+  },
+  methods: {
+          async deleteArticles(article_id) {
+            let res = await api.delPost({"post_id":article_id});
+            this.fetchlist();
+          },
+         async fetchlist() {
             let res = await api.getMyPostList({"user_id": this.user_id});
             let posts = res.data.data.post;
             console.log(posts);
             this.articles = posts;
             console.log("---");
             console.log(this.articles.data);
-
-        },
-        methods: {
+         } ,
           formatted_time(iso_date_string) {
             console.log(iso_date_string);
             const date = new Date(iso_date_string);
