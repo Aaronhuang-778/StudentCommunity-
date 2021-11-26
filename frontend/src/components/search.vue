@@ -1,4 +1,5 @@
 <template>
+
 <div>
   <div class="search">
                 <form>
@@ -7,24 +8,21 @@
                 </form>
             </div>
 
-
 </div>
 </template>
 
 <script>
 export default {
-  name: "Search",
-  props:["user_id", "user_name"],
+  name: "search",
+
   data() {
     return {
-        tags: ["compile", "database"],
+
     }
   },
 
   methods: {
-    search() {
-      this.$router.push({name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}});
-    }
+
   }
 }
 </script>
@@ -85,3 +83,5 @@ export default {
         color: white;
     }
 </style>
+
+

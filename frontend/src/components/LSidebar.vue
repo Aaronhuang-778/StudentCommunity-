@@ -10,23 +10,22 @@
     </div>
 
   <el-dropdown-menu slot="dropdown">
+
+    <el-dropdown-item>
+      <router-link
+        :to="{name: 'userProfile', params: {user_id: this.user_id, other_id: this.user_id}}"
+      style="color: #333333">
+        <li class="el-icon-house">
+            个人主页
+        </li>
+      </router-link>
+    </el-dropdown-item>
     <el-dropdown-item >
       <router-link :to="{name: 'newLog'}" style="color: #333333">
-        <li class="el-icon-house">
+        <li class="el-icon-back">
             退出登录
         </li>
       </router-link>
-<!--      <button @click="logout" style="border: none">logout</button>-->
-    </el-dropdown-item>
-    <el-dropdown-item>
-      <router-link
-        :to="{name: 'userProfile', params: {user_id: this.user_id, user_name: this.user_name}}"
-      style="color: #333333">
-        <li class="el-icon-setting">
-            个人资料
-        </li>
-      </router-link>
-<!--      <button @click="editInformation" style="border: none">edit u information</button>-->
     </el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
@@ -43,34 +42,34 @@
 <!--        </span>-->
 <!--      </el-menu-item>-->
       <el-menu-item index="1">
-        <i class="el-icon-reading" style="color: aqua"></i>
+        <i class="el-icon-news" style="color: aqua"></i>
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
-                       :to="{name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}} ">帖子</router-link>
+                       :to="{name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}} ">广场</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="2">
-        <i class="el-icon-document" style="color: aqua"></i>
+        <i class="el-icon-edit" style="color: aqua"></i>
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'createArticle', params: {user_id: this.user_id, user_name: this.user_name}} ">发布</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="3">
-        <i class="el-icon-edit" style="color: aqua"></i>
+        <i class="el-icon-document" style="color: aqua"></i>
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
-                       :to="{name: 'message', params: {user_id: this.user_id, user_name: this.user_name}} ">留言</router-link>
+                       :to="{name: 'myarticles', params: {user_id: this.user_id, user_name: this.user_name}} ">我的</router-link>
         </span>
       </el-menu-item>
+<!--      <el-menu-item index="4">-->
+<!--        <i class="el-icon-search" style="color: aqua"></i>-->
+<!--        <span slot="title">-->
+<!--          <router-link style="text-decoration: none; color: black"-->
+<!--                       :to="{name: 'search', params: {user_id: this.user_id, user_name: this.user_name}} ">查找</router-link>-->
+<!--        </span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="4">
-        <i class="el-icon-search" style="color: aqua"></i>
-        <span slot="title">
-          <router-link style="text-decoration: none; color: black"
-                       :to="{name: 'search', params: {user_id: this.user_id, user_name: this.user_name}} ">查找</router-link>
-        </span>
-      </el-menu-item>
-      <el-menu-item index="5">
         <i class="el-icon-view" style="color: aqua"></i>
         <span slot="title">
           <router-link style="text-decoration: none; color: black"

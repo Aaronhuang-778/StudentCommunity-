@@ -9,8 +9,7 @@ import articlelist from '../../views/articlelist'
 import articleDetails from "../../views/articleDetails";
 import createArticle from '../../views/createArticle'
 import about from '../../views/about'
-import message from '../../views/message'
-import search from '../../views/Search'
+import myarticles from '../../views/MyArticles'
 
 Vue.use(Router)
 
@@ -30,7 +29,7 @@ export default new Router({
       component: profile,
       children: [
           {
-            path: '/profile/userProfile/:user_id/:user_name',
+            path: '/profile/userProfile/:user_id/:other_id',
             name: 'userProfile',
             props: true,
             component: userProfile
@@ -42,11 +41,11 @@ export default new Router({
             component: articlelist
           },
         {
-      path: '/profile/articleDetails/:article_id/:user_id/:user_name',
-      name: 'articleDetails',
-      props: true,
-      component: articleDetails
-    },
+          path: '/profile/articleDetails/:article_id/:user_id/:user_name',
+          name: 'articleDetails',
+          props: true,
+          component: articleDetails
+        },
         {
             path: '/profile/createArticle/:user_id/:user_name',
             name: 'createArticle',
@@ -54,23 +53,24 @@ export default new Router({
             component: createArticle
           },
         {
-          path: '/profile/about/:user_id/:user_name',
+          path: '/profile/myarticles/:user_id/:user_name',
+            name: 'myarticles',
+          props:true,
+            component: myarticles
+        },
+        {
+        path: '/profile/about/:user_id/:user_name',
             name: 'about',
           props:true,
             component: about
-        },
-        {
-          path: '/profile/message/:user_id/:user_name',
-            name: 'message',
-          props:true,
-            component: message
-        },
-        {
-          path: '/profile/search/:user_id/:user_name',
-            name: 'search',
-          props:true,
-            component: search
         }
+        //,
+        // {
+        //   path: '/profile/message/:user_id/:user_name',
+        //     name: 'message',
+        //   props:true,
+        //     component: message
+        // }
       ]
     }
   ]

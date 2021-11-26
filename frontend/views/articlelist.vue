@@ -1,26 +1,35 @@
 <template>
    <div>
-    <el-row :gutter="25">
-      <el-col :span="20" :offset="2">
+      <div>
+        <div class="search">
+          <form>
+              <input type="text" placeholder="输入搜索内容...">
+              <button ></button>
+          </form>
+        </div>
+      </div>
+    <el-row :gutter="25" style="background-image: image('../src/assets/seesky.jpg')">
+      <el-col :span="20" :offset="2"  >
         <el-card v-for="(item,index) in articles" :key="index" style="background: transparent">
           <div slot="header">
             <div class="main-text" @click="goforDetail(item.post_id)">
               {{item.post_title}}
             </div>
-<!--            <router-link class="main-text"-->
-<!--                         :to="{ name: 'articleDetails', params: { article_id: item.post_id , user_id: this.user_id}}"-->
-<!--                         >{{item.post_title}}</router-link>-->
+
             <div class="article-info">
               <el-tag effect="dark" size="mini">原创</el-tag>
               浏览量：0
               <span class="article_info_date">标签：
-                <span v-if="item.labels.length === 0">未分类</span>
-                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>
+                <el-tag  class="tag_margin"  >{{item.keyword_name}}</el-tag>
+<!--                <span v-if="item.labels.length === 0">未分类</span>-->
+<!--                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>-->
               </span>
             </div>
           </div>
-          <div class="tabloid">{{item.content}}</div>
-          <i class="el-icon-user-solid article-icon">{{item.user_name}}</i>
+          <div class="tabloid">{{brief(item.content)}}</div>
+          <i class="el-icon-user-solid article-icon" @click="goforMan(item.user_id)">
+              {{item.user_name}}
+          </i>
           <i class="el-icon-date article-icon">
             {{formatted_time(item.post_date)}}
           </i>
@@ -43,7 +52,6 @@
 <script>
     import api from '../tools/user';
 
-
     export default {
       name: 'articlelist',
       props:["user_id", "user_name"],
@@ -55,42 +63,33 @@
       async  mounted() {
             let res = await api.getPostList();
             let posts = res.data.data.post;
-            // console.log(posts);
+            console.log(posts);
             this.articles = posts;
             console.log("---");
-            console.log(this.articles.labels);
-            // axios
-            //     .get('/api/article')
-            //     .then(response => (this.info = response.data))
+            console.log(this.articles.data);
 
-          // this.$https({
-          //   method: "post",
-          //   url: '-----',
-          //   data:{}
-          // }).then(function (res){
-          //   this.articles = res.body.payload.article;
-          //   for(let i = 0;i < this.articles.length; i++) {
-          //     if (this.articles[i].labels.length > 0) {
-          //       this.articles[i].labels = this.articles[i].labels.split(',');
-          //       console.log(this.articles[i].labels.length);
-          //     }
-          //   }
-          // }).catch(function (e){
-          //   this.$message.error("error!");
-          // })
         },
         methods: {
-          formatted_time: function (iso_date_string) {
+          formatted_time(iso_date_string) {
+            console.log(iso_date_string);
             const date = new Date(iso_date_string);
             return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
           },
           goforDetail(article_id) {
               this.$router.push({
                 name: 'articleDetails', params: { article_id: article_id , user_id: this.user_id, user_name: this.user_name}});
+          },
+          brief(content) {
+            return content.substr(0, 35) + '...';
+          },
+          goforMan(other_id) {
+            this.$router.push({name: 'userProfile', params: {user_id: this.user_id, other_id: other_id}});
+          },
+          search() {
+            //fetch list
           }
         }
     }
-
 </script>
 
 <!-- "scoped" 使样式仅在当前组件生效 -->
@@ -143,5 +142,62 @@
   font-size: 14px;
   margin-bottom: 10px;
 }
+
+.search {
+        padding-top: 22px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    form {
+        position: relative;
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    input, button {
+        border: none;
+        outline: none;
+    }
+
+    input {
+        width: 100%;
+        height: 35px;
+        padding-left: 13px;
+        padding-right: 46px;
+    }
+
+    button {
+        height: 35px;
+        width: 35px;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    .search input {
+        border: 2px solid gray;
+        border-radius: 5px;
+        background: transparent;
+        top: 0;
+        right: 0;
+    }
+
+    .search button {
+        background: gray;
+        border-radius: 0 5px 5px 0;
+        width: 45px;
+        top: 0;
+        right: 0;
+    }
+
+    .search button:before {
+        content: "搜索";
+        font-size: 13px;
+        color: white;
+    }
+
+
 
 </style>

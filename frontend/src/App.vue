@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div class="header-background">
-    	<img src="./assets/seesky.jpg" width="100%" height="100%" style="opacity: 0.4" />
-    </div>`
+<!--    <div class="header-background">-->
+<!--    	<img src="./assets/seesky.jpg" width="100%" height="100%" style="opacity: 0.4" />-->
+<!--    </div>`-->
     <router-view/>
   </div>
 </template>

@@ -2,9 +2,11 @@
     <div>
     <div v-if="article !== null" class="grid-container">
         <div>
-            <h1 id="title" style="position: center">{{ article.post_title }}</h1>
-            <p id="subtitle" style="color: #333333">
-                本文由 {{ article.user_name }} 发布于 {{ formatted_time(article.post_date) }}
+            <h1 id="title" style="position: center; font-size: xx-large">{{ article.post_title }}</h1>
+            <p id="subtitle" style="color: #333333; font-size: medium">
+                本文由 <i class="el-icon-user-solid article-icon" @click="goforMan(article.user_id)">
+              {{article.user_name}}
+          </i>发布于 {{ formatted_time(article.post_date) }}
             </p>
             <div class="article-body">{{ article.content }}</div>
           <div>
@@ -45,6 +47,9 @@
                 const date = new Date(iso_date_string);
                 return date.toLocaleDateString()
             },
+          goforMan(other_id) {
+            this.$router.push({name: 'userProfile', params: {user_id: this.user_id, other_id: other_id}});
+          },
             http() {
                 return {
                   user_id: this.user_id,
@@ -71,10 +76,9 @@
         color: gray;
         font-size: small;
     }
-    .article-body p img {
-        max-width: 100%;
-        border-radius: 50px;
-        box-shadow: gray 0 0 20px;
+    .article-body {
+        font-family: 华文新魏;
+      font-size: x-large;
     }
 
     .toc ul {

@@ -8,7 +8,7 @@
             name="comment"
             id="comment-area"
             cols="160"
-            rows="10"
+            rows="5"
             style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); background-color: transparent"
             ></textarea>
   <div>
