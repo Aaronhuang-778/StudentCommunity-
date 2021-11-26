@@ -40,7 +40,7 @@ def like(request):
 
 
 def cancellike(request):
-    data = json.loads(request.GET.get('data'))
+    data = json.loads(request.body)
     flag = tools.cancellike(**data)
     return myResponse(flag)
 
@@ -52,7 +52,7 @@ def unlike(request):
 
 
 def cancelunlike(request):
-    data = json.loads(request.GET.get('data'))
+    data = json.loads(request.body)
     flag = tools.cancelunlike(**data)
     return myResponse(flag)
 
@@ -76,7 +76,7 @@ def follow(request):
 
 
 def cancelfollow(request):
-    data = json.loads(request.GET.get('data'))
+    data = json.loads(request.body)
     flag = tools.cancelfollow(**data)
     return myResponse(flag)
 
@@ -94,7 +94,7 @@ def cancelmessage(request):
 
 
 def getUser(request):
-    data = json.loads(request.GET.get('data'))
+    data = json.loads(request.body)
     flag, res = tools.getUser(**data)
     return myResponse(flag, res)
 

@@ -90,7 +90,7 @@ export default {
     //this.user_id,this.other_id
     //return content
     let topass = this.other_id;
-      let res = await api.getUser({"user_id": topass});
+      let res = await api.getUser({"user_id": topass, "follow_id": this.user_id});
       console.log(res.data.data);
     this.user_name = res.data.data.user_name;
     this.user_phone = res.data.data.user_phone;
@@ -98,6 +98,7 @@ export default {
     this.star_num = res.data.data.star_num;
      this.post_num = res.data.data.post_num;
      this.messages = res.data.data.message;
+     this.isFollow = res.data.data.isFollow !== -1;
   },
   data() {
     return {
@@ -130,7 +131,7 @@ export default {
   methods: {
           async fetchlist() {
             let topass = this.other_id;
-            let res = await api.getUser({"user_id": topass});
+            let res = await api.getUser({"user_id": topass, "follow_id": this.user_id});
             console.log(res.data.data);
            this.messages = res.data.data.message;
           },
@@ -149,12 +150,14 @@ export default {
           async followClick() {
             this.isFollow = true;
             let res = await api.follow({"follow_id":this.user_id, "star_id":this.other_id});
+            this.follow_num++;
             //call
           },
           async followReset() {
             this.isFollow = false;
             // call
             let res = await api.cancelfollow({"follow_id": this.user_id, "star_id": this.other_id});
+            this.follow_num--;
           },
 
     http() {

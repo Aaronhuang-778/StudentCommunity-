@@ -70,8 +70,6 @@
             let posts = res.data.data.post;
             console.log(posts);
             this.articles = posts;
-            console.log("---");
-            console.log(this.articles.data);
           },
 
           formatted_time(iso_date_string) {

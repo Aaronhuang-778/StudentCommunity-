@@ -10,12 +10,12 @@
             </p>
             <div class="article-body">{{ article.content }}</div>
           <div>
-            <Like :article_id="article.post_id"></Like>
+            <Like :article="article" :user_id="user_id" ref="like"></Like>
           </div>
         </div>
     </div>
 
-  <Comment :article="article" ref="comment"></Comment>
+  <Comment :article="article"></Comment>
       </div>
 
 </template>
@@ -44,9 +44,9 @@
             console.log(this.article);
             // this.$refs.comment.comments = this.article.comment;
             // console.log("++++++++++++++++");
-
-        console.log(this.article.comment);
-        console.log(this.$refs.comment.comments);
+            // console.log(this.$refs.like.isUp);
+        // console.log(this.article.comment);
+        // console.log(this.$refs.comment.comments);
         },
         methods: {
             formatted_time: function (iso_date_string) {

@@ -32,7 +32,7 @@
               </span>
               于
               <span class="created">
-                {{ comment.comment_date }}
+                {{formatted_time(comment.comment_date)}}
               </span>
       <!--        <span v-if="comment.parent">-->
       <!--          对-->
@@ -106,55 +106,25 @@
       async submit() {
         let res = await api.comment(this.http());
         if (res.data.code===20000) {
-
+          this.comments = res.data.data.comment;
+          this.article.comment_number = this.comments.length;
           alert("评论成功");
         } else {
           alert("评论失败");
         }
-        // const that = this;
-        // authorization()
-        //   .then(function (response) {
-        //     if (response[0]) {
-        //       axios
-        //         .post('/api/comment/',
-        //           {
-        //             content: that.message,
-        //             article_id: that.article.id,
-        //             parent_id: that.parentID,
-        //           },
-        //           {
-        //             headers: {Authorization: 'Bearer ' + localStorage.getItem('access.myblog')}
-        //           })
-        //         .then(function (response) {
-        //           // 将新评论添加到顶部
-        //           that.comments.unshift(response.data);
-        //           that.message = '';
-        //           alert('留言成功')
-        //         })
-        //     }
-        //     else {
-        //       alert('请登录后评论。')
-        //     }
-        //})
       },
-      // 对某条评论进行评论
-      // 即二级评论
-      // replyTo(comment) {
-      //   this.parentID = comment.id;
-      //   this.placeholder = '对' + comment.author.username + '说:'
-      // },
-      // 修改日期显示格式
-      // formatted_time: function (iso_date_string) {
-      //   const date = new Date(iso_date_string);
-      //   return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
-      // },
       load () {
         this.loading = true
         setTimeout(() => {
           this.count += 2
           this.loading = false
         }, 2000)
-      }
+      },
+      formatted_time(iso_date_string) {
+            // console.log(iso_date_string);
+            const date = new Date(iso_date_string);
+            return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
+      },
     }
   }
 </script>

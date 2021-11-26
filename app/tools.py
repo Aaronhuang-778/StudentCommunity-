@@ -60,9 +60,9 @@ def like(post_id, user_id):
         return False, None
 
 
-def cancellike(like_id):
+def cancellike(post_id, user_id):
     try:
-        like = Like.objects.filter(id=like_id)[0]
+        like = Like.objects.filter(post_id=post_id,user_id=user_id)[0]
         addsub(like.post_id, 'like_number', '-', 'Post')
         like.delete()
         return True
@@ -81,9 +81,9 @@ def unlike(post_id, user_id):
         return False, None
 
 
-def cancelunlike(unlike_id):
+def cancelunlike(post_id, user_id):
     try:
-        unlike = Unlike.objects.filter(id=unlike_id)[0]
+        unlike = Unlike.objects.filter(post_id=post_id,user_id=user_id)[0]
         addsub(unlike.post_id, 'unlike_number', '-', 'Post')
         unlike.delete()
         return True
@@ -94,9 +94,18 @@ def cancelunlike(unlike_id):
 
 def comment(post_id, user_id, content):
     try:
+        res={}
         comment = Comment.objects.create(post_id=post_id, user_id=user_id, content=content)
         addsub(post_id, 'comment_number', '+', 'Post')
-        return True, comment.dict()
+        commenttt = Comment.objects.filter(post_id=post_id)
+        comments = []
+        for i in commenttt:
+            temp = i.dict()
+            user_name = User.objects.filter(id=temp['user_id'])[0].user_name
+            temp['user_name'] = user_name
+            comments.append(temp)
+        res["comment"] = comments
+        return True, res
     except Exception as e:
         print(str(e))
         return False, None
@@ -124,9 +133,9 @@ def follow(follow_id, star_id):
         return False, None
 
 
-def cancelfollow(follow_star_id):
+def cancelfollow(follow_id, star_id):
     try:
-        follow_star = Follow_star.objects.filter(id=follow_star_id)[0]
+        follow_star = Follow_star.objects.filter(follow_id=follow_id, star_id=star_id)[0]
         addsub(follow_star.follow_id, 'star_num', '-', 'User')
         addsub(follow_star.star_id, 'follow_num', '-', 'User')
         follow_star.delete()
@@ -173,7 +182,7 @@ def addsub(id: int, attribute: str, type: str, table=None):  # 表.字段+-=1
     temp.save()
 
 
-def getUser(user_id):
+def getUser(user_id, follow_id):
     try:
         user = User.objects.filter(id=user_id)[0]
         res = user.dict()
@@ -185,6 +194,12 @@ def getUser(user_id):
             temp['send_user_name'] = send_user_name
             messages.append(temp)
         res["message"] = messages
+        follow = Follow_star.objects.filter(follow_id=follow_id, star_id=user_id)
+        if len(follow) == 0:
+            res["isFollow"] = -1
+        else:
+            res["isFollow"] = 1
+
         return True, res
     except Exception as e:
         print(str(e))
@@ -200,7 +215,6 @@ def getPost(post_id, user_id):
         for i in comment:
             temp = i.dict()
             user_name = User.objects.filter(id=temp['user_id'])[0].user_name
-            print(user_name)
             temp['user_name'] = user_name
             comments.append(temp)
         res["comment"] = comments

@@ -92,10 +92,8 @@ export default {
   cancellike(data) {  //取消点赞 like_id
     return request({
       url: 'http://localhost:8000/api/cancellike',
-      method: 'get',
-      params:{
-        data
-      }
+      method: 'post',
+      data
     })
   },
   unlike(data) {  //踩 post_id, user_id
@@ -108,10 +106,8 @@ export default {
   cancelunlike(data) {  //取消踩 unlike_id
     return request({
       url: 'http://localhost:8000/api/cancelunlike',
-      method: 'get',
-      params:{
-        data
-      }
+      method: 'post',
+      data
     })
   },
   follow(data) {  //关注 follow_id, star_id
@@ -124,19 +120,15 @@ export default {
   cancelfollow(data) {  //取消关注 follow_star_id
     return request({
       url: 'http://localhost:8000/api/cancelfollow',
-      method: 'get',
-      params:{
-        data
-      }
+      method: 'post',
+      data
     })
   },
   getUser(data) {  //根据user_id得到user详情 user_id
     return request({
       url: 'http://localhost:8000/api/getUser',
       method: 'post',
-      params:{
-        data
-      }
+      data
     })
   },
   getMyPostList(data) {  //得到user_id得到其post user_id
