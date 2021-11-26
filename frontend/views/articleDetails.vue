@@ -44,7 +44,7 @@
             console.log(this.article);
             // this.$refs.comment.comments = this.article.comment;
             // console.log("++++++++++++++++");
-
+        //
         console.log(this.article.comment);
         console.log(this.$refs.comment.comments);
         },

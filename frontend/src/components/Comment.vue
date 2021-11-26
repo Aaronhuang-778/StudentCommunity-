@@ -28,11 +28,11 @@
           <div class="comments">
             <div>
               <span class="username">
-                {{ comment.user_id }}
+                {{comment.user_id}}
               </span>
               于
               <span class="created">
-                {{ comment.comment_date }}
+                {{comment.comment_date}}
               </span>
       <!--        <span v-if="comment.parent">-->
       <!--          对-->
