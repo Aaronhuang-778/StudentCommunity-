@@ -10,25 +10,30 @@
           <div class="name-role">
           <span class="sender">{{this.user_name}}</span>
         </div>
-        <div class="registe-info">
-<!--          <span class="registe-info">-->
-<!--            注册时间：-->
-<!--            <li class="fa fa-clock-o"></li>-->
-<!--             2020/4/10 9:40:33-->
-<!--          </span>-->
+         <div class="personal-relation">
+    </div>
+       <div style="width: 85%;margin: auto; padding-top: 10px">
+        <div style="float:left;width: 33%; text-align: center">
+            关注人数:{{star_num}}
         </div>
+        <div style="float:left;width: 33%; text-align: center">
+            粉丝人数:{{follow_num}}
+        </div>
+         <div style="float:left;width: 33%; text-align: center"  v-if="isSelf() === false">
+            <span style="width: 100px; float: right" v-if="isFollow === false">
+            <i class="el-icon-star-off" @click="followClick" > 关注</i>
+            </span>
+          <span style="width: 100px; float: right" v-else>
+            <i class="el-icon-star-on" @click="followReset"> 已关注</i>
+            </span>
+        </div>
+    </div>
         <el-divider></el-divider>
         <div class="personal-relation">
         <div class="relation-item">手机号:  <div style="float: right; padding-right:20px;">{{user_phone}}</div></div>
     </div>
     <div class="personal-relation">
       <div class="relation-item">发布文章数:  <div style="float: right; padding-right:20px;">{{post_num}}</div></div>
-    </div>
-       <div class="personal-relation">
-      <div class="relation-item">关注人数:  <div style="float: right; padding-right:20px;">{{star_num}}</div></div>
-    </div>
-     <div class="personal-relation">
-      <div class="relation-item">粉丝人数:  <div style="float: right; padding-right:20px;">{{follow_num}}</div></div>
     </div>
       </el-card>
         </div>
@@ -43,9 +48,9 @@
         </div>
         <el-card v-for="(item,index) in messages" :key="index" style="background: transparent">
           <div class="tabloid">{{item.content}}</div>
-          <i class="el-icon-user-solid article-icon">{{item.user_name}}</i>
+          <i class="el-icon-user-solid article-icon">{{item.send_user_name}}</i>
           <i class="el-icon-date article-icon">
-            {{formatted_time(item.post_date)}}
+            {{formatted_time(item.message_date)}}
           </i>
         </el-card>
       </el-card>
@@ -53,12 +58,6 @@
       <el-card class="box-card" v-else>
         <div slot="header" class="clearfix">
           <span style="width: 100px; float: left">说点什么</span>
-          <span style="width: 100px; float: right" v-if="isFollow === false">
-            <i class="el-icon-star-off" @click="followClick" > 关注</i>
-            </span>
-          <span style="width: 100px; float: right" v-else>
-            <i class="el-icon-star-on" @click="followReset"> 取消关注</i>
-            </span>
         </div>
         <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="留言内容" prop="content">
@@ -87,8 +86,17 @@ export default {
   async mounted() {
     //this.user_id,this.other_id
     //return content
-      var res = await api.getUser({"user_id": this.user_id});
+    let topass = this.user_id;
+    if (this.user_id !== this.other_id)
+      topass = this.other_id;
+      let res = await api.getUser({"user_id": topass});
       console.log(res.data.data);
+    this.user_name = res.data.data.user_name;
+    this.user_phone = res.data.data.user_phone;
+    this.follow_num = res.data.data.follow_num;
+    this.star_num = res.data.data.star_num;
+     this.post_num = res.data.data.post_num;
+     this.messages = res.data.data.message;
   },
   data() {
     return {
@@ -138,7 +146,7 @@ export default {
     http() {
         return {
           send_user_id: this.user_id,
-          receive_user_phone: this.ruleForm.phone,
+          receive_user_id: this.other_id,
           content: this.ruleForm.content
         }
       },
