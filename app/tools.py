@@ -136,9 +136,10 @@ def cancelfollow(follow_star_id):
         return False
 
 
-def message(send_user_id, receive_user_id, content):
+def message(send_user_id, receive_user_phone, content):
     try:
-        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=receive_user_id, content=content)
+        user = User.objects.filter(user_phone=receive_user_phone)[0]
+        message = Message.objects.create(send_user_id=send_user_id, receive_user_id=user.id, content=content)
         return True, message.dict()
     except Exception as e:
         print(str(e))
@@ -201,7 +202,7 @@ def getPost(post_id, user_id):
             res["unlike_id"] = -1
         else:
             res["unlike_id"] = unlikes[0].id
-        res["comment"] = comments
+        res["commment"] = comments
         user_name = User.objects.filter(id=res['user_id'])[0].user_name
         res['user_name'] = user_name
         return True, res
