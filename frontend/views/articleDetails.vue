@@ -44,9 +44,6 @@
             console.log(this.article);
             // this.$refs.comment.comments = this.article.comment;
             // console.log("++++++++++++++++");
-            // console.log(this.$refs.like.isUp);
-        // console.log(this.article.comment);
-        // console.log(this.$refs.comment.comments);
         },
         methods: {
             formatted_time: function (iso_date_string) {
