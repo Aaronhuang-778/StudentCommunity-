@@ -1,5 +1,5 @@
 <template>
-<div style="text-align: center">航言论坛 ©2021 Created by ZZY.HW.TY</div>
+<div style="text-align: center">航言社区 ©2021 Created by ZZY.HW.TY</div>
 </template>
 
 <script>

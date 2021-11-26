@@ -13,11 +13,11 @@
          <div class="personal-relation">
     </div>
        <div style="width: 85%;margin: auto; padding-top: 10px">
-        <div style="float:left;width: 33%; text-align: center">
-            关注人数:{{star_num}}
+        <div style="float:left;width: 20%; text-align: center; font-size: 10px">
+            关注:{{star_num}}
         </div>
-        <div style="float:left;width: 33%; text-align: center">
-            粉丝人数:{{follow_num}}
+        <div style="float:left;width: 20%; text-align: center; font-size: 10px">
+            粉丝:{{follow_num}}
         </div>
          <div style="float:left;width: 33%; text-align: center"  v-show="this.user_id != this.other_id">
             <span style="width: 100px; float: right" v-if="isFollow === false">

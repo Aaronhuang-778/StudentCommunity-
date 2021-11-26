@@ -1,6 +1,6 @@
 <template>
     <div id="header">
-        <h1 style="font-family: 'Times New Roman'; font-size: x-large">航言论坛</h1>
+        <h1 style="font-family: 'Times New Roman'; font-size: x-large">航言·北航交流园地</h1>
         <hr>
     </div>
 </template>
