@@ -2,9 +2,9 @@
    <div>
       <div>
         <div class="search">
-          <form>
+          <form action="#">
               <input type="text" placeholder="输入搜索内容...">
-              <button ></button>
+              <button @click="search" ></button>
           </form>
         </div>
       </div>
@@ -60,18 +60,22 @@
                 articles:[]
             }
       },
-      async  mounted() {
+    mounted() {
+      this.fetchlist();
+
+    },
+        methods: {
+          async fetchlist() {
             let res = await api.getPostList();
             let posts = res.data.data.post;
             console.log(posts);
             this.articles = posts;
             console.log("---");
             console.log(this.articles.data);
+          },
 
-        },
-        methods: {
           formatted_time(iso_date_string) {
-            console.log(iso_date_string);
+            // console.log(iso_date_string);
             const date = new Date(iso_date_string);
             return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
           },
@@ -87,6 +91,8 @@
           },
           search() {
             //fetch list
+            console.log("8888888");
+            this.fetchlist();
           }
         }
     }

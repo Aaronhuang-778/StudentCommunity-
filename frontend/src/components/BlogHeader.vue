@@ -1,6 +1,6 @@
 <template>
     <div id="header">
-        <h1 style="font-family: 'Times New Roman'; font-size: large">Welcome To Buaa Talk</h1>
+        <h1 style="font-family: 'Times New Roman'; font-size: x-large">航言论坛</h1>
         <hr>
     </div>
 </template>

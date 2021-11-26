@@ -15,7 +15,7 @@
         </div>
     </div>
 
-  <Comment :article="article"></Comment>
+  <Comment :article="article" ref="comment"></Comment>
       </div>
 
 </template>
@@ -41,6 +41,12 @@
         async mounted() {
             let res = await api.getPost(this.http());
             this.article = res.data.data;
+            console.log(this.article);
+            // this.$refs.comment.comments = this.article.comment;
+            // console.log("++++++++++++++++");
+
+        console.log(this.article.comment);
+        console.log(this.$refs.comment.comments);
         },
         methods: {
             formatted_time: function (iso_date_string) {

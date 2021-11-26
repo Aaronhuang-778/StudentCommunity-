@@ -54,5 +54,14 @@ export default {
       method: 'post',
       data
     })
+  },
+    getUser(data) {
+    return request({
+      url: 'http://localhost:8000/api/getUser',
+      method: 'get',
+      params: {
+        data
+      }
+    })
   }
 }
