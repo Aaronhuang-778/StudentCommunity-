@@ -170,7 +170,7 @@ export default {
     ._body {
       align-items: center;
       background-color:  #e9e9e9;
-      background: url("../src/assets/back3.jpg");
+      /*background: url("../src/assets/back3.jpg");*/
       /* 决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动。 */
       /* https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment */
       background-attachment: fixed;
@@ -256,7 +256,7 @@ export default {
 
     .overlay {
       background-color: var(--lightblue);
-      background: url("../src/assets/back3.jpg");
+      /*background: url("../src/assets/back3.jpg");*/
       background-attachment: fixed;
       background-position: center;
       background-repeat: no-repeat;

@@ -67,7 +67,7 @@
             <el-input type="textarea" v-model="ruleForm.content" style="background: transparent"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee; size: 6px">发送</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee; size: 6px">留言</el-button>
             <el-button @click="resetForm('ruleForm')" style="background: #e5e9f2" size="6px">重置</el-button>
           </el-form-item>
         </el-form>
