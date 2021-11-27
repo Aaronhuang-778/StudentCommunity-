@@ -113,7 +113,7 @@ export default {
       if (this.tips1 === '') {
         let res = await api.signin(this.$data);
         if (res.data.code === 20000) {//20000，返回code
-          alert("登录成功");
+          // alert("登录成功");
           console.log(res);
           let user_id = res.data.data.user_id;
           let user_name = res.data.data.user_name;
