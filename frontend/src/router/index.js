@@ -23,7 +23,7 @@ export default new Router({
       component: newLog
     },
     {
-      path: '/profile/:user_id/:user_name',
+      path: '/profile/:user_id/:user_name/:picture',
       name: 'profile',
       props: true,
       component: profile,

@@ -114,9 +114,11 @@ export default {
         let res = await api.signin(this.$data);
         if (res.data.code === 20000) {//20000，返回code
           alert("登录成功");
+          console.log(res);
           let user_id = res.data.data.user_id;
           let user_name = res.data.data.user_name;
-          this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name}});
+          let picture = res.data.data.picture;
+          this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name, picture: picture}});
         } else {//40000
           alert("手机号不存在或密码错误");
         }

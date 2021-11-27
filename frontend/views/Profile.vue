@@ -1,6 +1,6 @@
 <template>
   <el-container  class="total">
-    <lside :user_id="user_id" :user_name="user_name"> </lside>
+    <lside :user_id="user_id" :user_name="user_name" :picture="picture"> </lside>
   <el-container style="border-right: 0">
     <el-header style="border-right: 0">
       <blogheader></blogheader>
@@ -18,7 +18,7 @@ import rside from '../src/components/RSidebar'
 import blogheader from '../src/components/BlogHeader'
 export default {
   name: "Profile",
-  props:["user_id", "user_name"],
+  props:["user_id", "user_name", "picture"],
   components: {
       lside,
     rside,
