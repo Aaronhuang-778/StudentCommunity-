@@ -6,6 +6,11 @@
         <form action="#" class="form" id="form1">
           <h2 class="form__title">注册</h2>
           <input type="text" placeholder="用户名" class="input" v-model="UpData.user_name"/>
+          <select id="group" class="sex" @change="getSex($event)">
+            <option value="1" >男</option>
+            <option value="0" >女</option>
+            <option value="" disabled selected hidden>性别</option>
+          </select>
           <input type="text" placeholder="手机号码" class="input" v-model="UpData.user_phone" @blur="CheckPhone2"/>
           <span :class="tipsStyle2">{{ tips2 }}</span>
           <input type="password" placeholder="密码" class="input" v-model= "UpData.password" @blur="CheckPassWords"/>
@@ -55,7 +60,8 @@ export default {
       UpData: {
         user_name:'',
         user_phone: '',
-        password: ''
+        password: '',
+        sex: '',
       },
       tips1:'',//In
       tipsStyle1:'',
@@ -82,6 +88,13 @@ export default {
         this.data.InData.user_phone = '';
         this.data.UpData.password = '';
       });
+    },
+
+    getSex(event) {
+      console.log(event.target.value)
+        if (event.target.value === '0') this.sex = 0;
+        else this.sex = 1;
+      console.log(this.sex)
     },
 
     async signup() {
@@ -335,6 +348,14 @@ export default {
       padding: 0.9rem 0.9rem;
       margin: 0.5rem 0;
       width: 100%;
+    }
+    .sex {
+      background-color: #fff;
+      border: none;
+      padding: 0.5rem 0.5rem;
+      margin: 0.5rem 0.5rem;
+      height: 10%;
+      width: 275px;
     }
 
     @keyframes show {
