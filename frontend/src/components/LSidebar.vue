@@ -2,7 +2,7 @@
   <el-aside width="150px">
   <el-dropdown>
     <div class="picture">
-      <img src="../assets/photo/2.png"/>
+      <img :src="require('../assets/photo/' + this.picture + '.png')"/>
     </div>
     <br/>
     <div style="text-align: center; font-size: medium">
@@ -83,10 +83,23 @@
 </template>
 
 <script>
+
 export default {
   name: "LSidebar",
-  props:["user_id", "user_name"],
+  props:["user_id", "user_name", "picture"],
+  mounted() {
+    console.log(this.picture);
+    this.imgSrc = '../assets/photo/' + this.picture + '.png';
+  },
+  data() {
+    return {
+      imgSrc: ''
+    }
+  },
   methods: {
+    getSrc() {
+      return '../assets/photo/' + this.picture + '.png';
+    }
     // logout() {
     //   this.$router.push({name:"newLog"});
     // },
