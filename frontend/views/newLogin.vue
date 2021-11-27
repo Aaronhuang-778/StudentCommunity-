@@ -91,10 +91,8 @@ export default {
     },
 
     getSex(event) {
-      console.log(event.target.value)
-        if (event.target.value === '0') this.sex = 0;
-        else this.sex = 1;
-      console.log(this.sex)
+        if (event.target.value === '0') this.UpData.sex = 0;
+        else this.UpData.sex = 1;
     },
 
     async signup() {
@@ -355,7 +353,7 @@ export default {
       padding: 0.5rem 0.5rem;
       margin: 0.5rem 0.5rem;
       height: 10%;
-      width: 275px;
+      width: 312px;
     }
 
     @keyframes show {
