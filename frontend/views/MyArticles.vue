@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="margin-top: 20px">
     <el-row :gutter="25" style="background-image: image('../src/assets/seesky.jpg')">
       <el-col :span="20" :offset="2"  >
         <el-card v-for="(item,index) in articles" :key="index" style="background: transparent">
@@ -16,7 +16,8 @@
 <!--                <span v-if="item.labels.length === 0">未分类</span>-->
 <!--                <el-tag v-else class="tag_margin" v-for="(tag,index) in item.labels" :key="index">{{tag}}</el-tag>-->
               </span>
-              <el-button @click="deleteArticles(item.post_id)" style="float: right; size: 10px" type="danger">删除</el-button>
+<!--              <el-button @click="deleteArticles(item.post_id)" style="float: right; size: 10px" type="danger">删除</el-button>-->
+              <img height="20" width="20" src="../src/assets/function/delete.png" @click="deleteArticles(item.post_id)" style="float: right;">
             </div>
           </div>
           <div class="tabloid">{{brief(item.content)}}</div>

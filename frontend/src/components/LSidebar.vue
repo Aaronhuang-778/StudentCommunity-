@@ -2,7 +2,7 @@
   <el-aside width="150px">
   <el-dropdown>
     <div class="picture">
-      <img src="../assets/user_head.jpg"/>
+      <img :src="require('../assets/photo/' + this.picture + '.png')"/>
     </div>
     <br/>
     <div style="text-align: center; font-size: medium">
@@ -33,7 +33,7 @@
       default-active="2"
       @open="handleOpen"
       @close="handleClose"
-    style="background-color: transparent; border-right: 0;">
+    style="background-color: transparent; border-right: 0; margin-top: 30px">
 <!--      <el-menu-item index="1">-->
 <!--        <i class="el-icon-menu"></i>-->
 <!--        <span slot="title">-->
@@ -42,21 +42,21 @@
 <!--        </span>-->
 <!--      </el-menu-item>-->
       <el-menu-item index="1">
-        <i class="el-icon-news" style="color: aqua"></i>
+        <img src="../assets/function/home.png" height="25" width="25">
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}} ">广场</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="2">
-        <i class="el-icon-edit" style="color: aqua"></i>
+        <img src="../assets/function/edit.png" height="25" width="25">
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'createArticle', params: {user_id: this.user_id, user_name: this.user_name}} ">发布</router-link>
         </span>
       </el-menu-item>
       <el-menu-item index="3">
-        <i class="el-icon-document" style="color: aqua"></i>
+        <img src="../assets/function/my.png" height="25" width="25">
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'myarticles', params: {user_id: this.user_id, user_name: this.user_name}} ">我的</router-link>
@@ -70,7 +70,7 @@
 <!--        </span>-->
 <!--      </el-menu-item>-->
       <el-menu-item index="4">
-        <i class="el-icon-view" style="color: aqua"></i>
+        <img src="../assets/function/about.png" height="25" width="25">
         <span slot="title">
           <router-link style="text-decoration: none; color: black"
                        :to="{name: 'about', params: {user_id: this.user_id, user_name: this.user_name}} ">关于</router-link>
@@ -83,10 +83,23 @@
 </template>
 
 <script>
+
 export default {
   name: "LSidebar",
-  props:["user_id", "user_name"],
+  props:["user_id", "user_name", "picture"],
+  mounted() {
+    console.log(this.picture);
+    this.imgSrc = '../assets/photo/' + this.picture + '.png';
+  },
+  data() {
+    return {
+      imgSrc: ''
+    }
+  },
   methods: {
+    getSrc() {
+      return '../assets/photo/' + this.picture + '.png';
+    }
     // logout() {
     //   this.$router.push({name:"newLog"});
     // },

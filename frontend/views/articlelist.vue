@@ -1,10 +1,12 @@
 <template>
    <div>
-      <div>
-        <div class="search">
-          <form action="#">
-              <input type="text" placeholder="输入搜索内容...">
-              <button @click="search" ></button>
+      <div class="search">
+        <div class="a">
+          <form>
+            <input type="text" class="b" placeholder="输入搜索内容...">
+            <a href="#" class="c">
+              <img src="../src/assets/function/search.png" style="width:20px;" @click="search">
+            </a>
           </form>
         </div>
       </div>
@@ -51,9 +53,11 @@
 
 <script>
     import api from '../tools/user';
+    import Search from "../src/components/search";
 
     export default {
       name: 'articlelist',
+      components: {Search},
       props:["user_id", "user_name"],
       data() {
             return {
@@ -146,60 +150,51 @@
   font-size: 14px;
   margin-bottom: 10px;
 }
-
 .search {
-        padding-top: 22px;
-    }
+  margin-top: 10px;
+}
 
-    * {
-        box-sizing: border-box;
+    .a{
+      position: absolute;
+      top: 8%;
+      left: 75%;
+      margin-left: 100px;
+      transform: translate(-50%,-50%);
+      background-color: #2f3640;
+      height: 40px;
+      border-radius: 60px;
+      padding: 10px;
     }
-
-    form {
-        position: relative;
-        width: 200px;
-        margin: 0 auto;
+    .a:hover .b{
+      width: 100px;
+      padding: 0 10px;
     }
-
-    input, button {
-        border: none;
-        outline: none;
+    .a:hover .c{
+      background-color: #E4E9F7;
     }
-
-    input {
-        width: 100%;
-        height: 35px;
-        padding-left: 13px;
-        padding-right: 46px;
+    .b{
+      border: none;
+      background: none;
+      /* 取消选中搜索框时的外边框 */
+      outline: none;
+      width: 0;
+      padding-top: 30px;
+      transition: .4s;
+      line-height: 40px;
+      font-size: 15px;
+      color:  #E4E9F7;
     }
-
-    button {
-        height: 35px;
-        width: 35px;
-        cursor: pointer;
-        position: absolute;
-    }
-
-    .search input {
-        border: 2px solid gray;
-        border-radius: 5px;
-        background: transparent;
-        top: 0;
-        right: 0;
-    }
-
-    .search button {
-        background: gray;
-        border-radius: 0 5px 5px 0;
-        width: 45px;
-        top: 0;
-        right: 0;
-    }
-
-    .search button:before {
-        content: "搜索";
-        font-size: 13px;
-        color: white;
+    .c{
+      color: #E4E9F7;
+      float: right;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2f3640;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: .4s;
     }
 
 

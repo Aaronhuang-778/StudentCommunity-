@@ -2,17 +2,21 @@
   <div>
     <el-divider></el-divider>
   <!-- 评论多行文本输入控件 -->
+    <li> 发布评论：</li>
   <textarea
             v-model="message"
             :placeholder="placeholder"
             name="comment"
             id="comment-area"
-            cols="160"
-            rows="5"
-            style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); background-color: transparent"
+            cols="130"
+            rows="3"
+            style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+                  background-color: transparent;
+                    margin-left: 65px; margin-top: 20px"
             ></textarea>
+    <img class="commentBtn" src="../assets/function/comment.png" @click="submit" height="30px" width="30px"
+         style="margin-left: 10px; margin-bottom: 10px">
   <div>
-    <button @click="submit" class="submitBtn">发布</button>
   </div>
 
   <el-divider></el-divider>
@@ -72,7 +76,7 @@
         comments: [],
         // 评论控件绑定的文本和占位符
         message: '',
-        placeholder: '说点啥吧...',
+        placeholder: '发表您的评论',
         // 评论的评论
         // parentID: null
         count: 10,
@@ -108,7 +112,7 @@
         if (res.data.code===20000) {
           this.comments = res.data.data.comment;
           this.article.comment_number = this.comments.length;
-          alert("评论成功");
+          // alert("评论成功");
         } else {
           alert("评论失败");
         }
@@ -143,10 +147,17 @@
     width: 60px;
     size: inherit;
   }
-  .commentBtn {
-    height: 25px;
-    background: lightslategray;
-    width: 40px;
+  .commentBtn:hover{
+    transform: scale(1.5,1.5);
+
+    -ms-transform:scale(1.5,1.5);
+
+    -moz-transform:scale(1.5,1.5);
+
+    -webkit-transform:scale(1.5,1.5);
+
+    -o-transform:scale(1.5,1.5);
+
   }
   .comments {
     padding-top: 10px;

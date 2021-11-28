@@ -7,17 +7,20 @@
         <div slot="header" class="clearfix">
           <span>基本信息</span>
         </div>
-          <div class="name-role">
-          <span class="sender">{{this.user_name}}</span>
-        </div>
+             <div class="mid">
+                 <img :src="require('../src/assets/photo/' + this.picture + '.png')" style="position: center"/>
+               </div>
+          <div style="text-align: center; font-size: medium">
+          {{this.user_name}}
+          </div>
          <div class="personal-relation">
     </div>
        <div style="width: 85%;margin: auto; padding-top: 10px">
-        <div style="float:left;width: 33%; text-align: center">
-            关注人数:{{star_num}}
+        <div style="float:left;width: 20%; text-align: center; font-size: 10px">
+            关注:{{star_num}}
         </div>
-        <div style="float:left;width: 33%; text-align: center">
-            粉丝人数:{{follow_num}}
+        <div style="float:left;width: 20%; text-align: center; font-size: 10px">
+            粉丝:{{follow_num}}
         </div>
          <div style="float:left;width: 33%; text-align: center"  v-show="this.user_id != this.other_id">
             <span style="width: 100px; float: right" v-if="isFollow === false">
@@ -67,7 +70,7 @@
             <el-input type="textarea" v-model="ruleForm.content" style="background: transparent"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee; size: 6px">发送</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')" style="background: #aabeee; size: 6px">留言</el-button>
             <el-button @click="resetForm('ruleForm')" style="background: #e5e9f2" size="6px">重置</el-button>
           </el-form-item>
         </el-form>
@@ -85,7 +88,7 @@ import api from "../tools/user";
 
 export default {
   name: "UserProfile",
-  props:["user_id","user_name", "other_id"],
+  props:["user_id","other_id"],
   async mounted() {
     //this.user_id,this.other_id
     //return content
@@ -93,6 +96,7 @@ export default {
       let res = await api.getUser({"user_id": topass, "follow_id": this.user_id});
       console.log(res.data.data);
     this.user_name = res.data.data.user_name;
+    this.picture = res.data.data.picture;
     this.user_phone = res.data.data.user_phone;
     this.follow_num = res.data.data.follow_num;
     this.star_num = res.data.data.star_num;
@@ -108,21 +112,13 @@ export default {
       //   picture: ''
       // },
       isFollow: false,
-      messages:[{
-        content: "hello!",
-        user_name: "zzy",
-        post_data: "0"
-      },{
-        content: "hello!",
-        user_name: "hw",
-        post_data: "0"
-      }],
-      user_name: 'ty',
-      user_phone: '173567777777',
-      // picture: '',
-      follow_num: '0',
-      star_num: '0',
-      post_num: '0',
+      messages:[],
+      user_name: '',
+      user_phone: '',
+      picture: '',
+      follow_num: '',
+      star_num: '',
+      post_num: '',
       ruleForm: {
           content: ''
       }
@@ -300,5 +296,14 @@ export default {
 .article-icon .tag:hover {
   color: black;
   cursor: pointer;
+}
+
+.mid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mid img {
+  width: 35%;
 }
 </style>

@@ -6,6 +6,11 @@
         <form action="#" class="form" id="form1">
           <h2 class="form__title">注册</h2>
           <input type="text" placeholder="用户名" class="input" v-model="UpData.user_name"/>
+          <select id="group" class="sex" @change="getSex($event)">
+            <option value="1" >男</option>
+            <option value="0" >女</option>
+            <option value="" disabled selected hidden>性别</option>
+          </select>
           <input type="text" placeholder="手机号码" class="input" v-model="UpData.user_phone" @blur="CheckPhone2"/>
           <span :class="tipsStyle2">{{ tips2 }}</span>
           <input type="password" placeholder="密码" class="input" v-model= "UpData.password" @blur="CheckPassWords"/>
@@ -55,7 +60,8 @@ export default {
       UpData: {
         user_name:'',
         user_phone: '',
-        password: ''
+        password: '',
+        sex: '',
       },
       tips1:'',//In
       tipsStyle1:'',
@@ -84,6 +90,11 @@ export default {
       });
     },
 
+    getSex(event) {
+        if (event.target.value === '0') this.UpData.sex = 0;
+        else this.UpData.sex = 1;
+    },
+
     async signup() {
       if (this.tips2 === '' && this.tips_p === ''){
         let res = await api.register(this.$data);
@@ -102,10 +113,12 @@ export default {
       if (this.tips1 === '') {
         let res = await api.signin(this.$data);
         if (res.data.code === 20000) {//20000，返回code
-          alert("登录成功");
+          // alert("登录成功");
+          console.log(res);
           let user_id = res.data.data.user_id;
           let user_name = res.data.data.user_name;
-          this.$router.push({name: 'profile', params: {user_id: user_id, user_name: user_name}});
+          let picture = res.data.data.picture;
+          this.$router.push({name: 'articlelist', params: {user_id: user_id, user_name: user_name, picture: picture}});
         } else {//40000
           alert("手机号不存在或密码错误");
         }
@@ -157,7 +170,7 @@ export default {
     ._body {
       align-items: center;
       background-color:  #e9e9e9;
-      background: url("../src/assets/back3.jpg");
+      /*background: url("../src/assets/back3.jpg");*/
       /* 决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动。 */
       /* https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment */
       background-attachment: fixed;
@@ -243,7 +256,7 @@ export default {
 
     .overlay {
       background-color: var(--lightblue);
-      background: url("../src/assets/back3.jpg");
+      /*background: url("../src/assets/back3.jpg");*/
       background-attachment: fixed;
       background-position: center;
       background-repeat: no-repeat;
@@ -335,6 +348,14 @@ export default {
       padding: 0.9rem 0.9rem;
       margin: 0.5rem 0;
       width: 100%;
+    }
+    .sex {
+      background-color: #fff;
+      border: none;
+      padding: 0.5rem 0.5rem;
+      margin: 0.5rem 0.5rem;
+      height: 10%;
+      width: 312px;
     }
 
     @keyframes show {

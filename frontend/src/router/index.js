@@ -23,13 +23,13 @@ export default new Router({
       component: newLog
     },
     {
-      path: '/profile/:user_id/:user_name',
+      path: '/profile/:user_id/:user_name/:picture',
       name: 'profile',
       props: true,
       component: profile,
       children: [
           {
-            path: '/profile/userProfile/:user_id/:user_name/:other_id',
+            path: '/profile/userProfile/:user_id/:other_id',
             name: 'userProfile',
             props: true,
             component: userProfile

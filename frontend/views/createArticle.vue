@@ -27,12 +27,12 @@
 
 
       <div class="form-elem">
-        <span>正文：</span>
-        <textarea v-model="content" placeholder="输入正文" rows="20" cols="80" style="background: transparent"></textarea>
+        <span>内容：</span>
+        <textarea v-model="content"  style="background: transparent; font-size: 23px; height: 300px; width: 600px"></textarea>
       </div>
 
       <div class="form-elem">
-        <button v-on:click.prevent="submit" style="background: #e5e9f2; color: #333333">提交</button>
+        <img height="35" width="35" src="../src/assets/function/publish.png" v-on:click.prevent="submit" style="float: right; margin-right: 200px">
       </div>
     </form>
   </div>
@@ -73,11 +73,12 @@
       categoryStyle(category) {
         if (this.selectedCategory !== null && category.id === this.selectedCategory.id) {
           return {
-            backgroundColor: 'pink',
+            backgroundColor: '#46c8ff',
+            border: 'black',
           }
         }
         return {
-          backgroundColor: 'grey',
+          backgroundColor: 'white',
           color: 'black',
         }
       },
@@ -104,7 +105,8 @@
       async submit() {
         let res = await api.publishPost(this.http());
         if (res.data.code === 20000) {
-          alert("发布成功");
+          // alert("发布成功");
+          this.$router.push({name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}});
         }
         else {
           alert("发布失败");
@@ -130,6 +132,18 @@
   .form-elem {
     padding: 10px;
   }
+  .form-elem img:hover{
+    transform: scale(2.0,2.0);
+
+    -ms-transform:scale(2.0,2.0);
+
+    -moz-transform:scale(2.0,2.0);
+
+    -webkit-transform:scale(2.0,2.0);
+
+    -o-transform:scale(2.0,2.0);
+
+  }
   input {
     height: 25px;
     padding-left: 10px;
@@ -138,7 +152,6 @@
   button {
     height: 35px;
     cursor: pointer;
-    border: none;
     outline: none;
     background: steelblue;
     color: whitesmoke;

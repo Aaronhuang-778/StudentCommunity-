@@ -3,8 +3,10 @@
 <div>
   <div class="search">
                 <form>
-                    <input type="text" placeholder="输入搜索内容...">
-                    <button @click="search"></button>
+                    <input type="text" class="b" placeholder="输入搜索内容...">
+                  <a href="#" class="c">
+                    <img src="src/assets/function/search.png" style="width:20px;" @click="search">
+                  </a>
                 </form>
             </div>
 
@@ -28,60 +30,47 @@ export default {
 </script>
 
 <style scoped>
-.search {
-        padding-top: 22px;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    form {
-        position: relative;
-        width: 200px;
-        margin: 0 auto;
-    }
-
-    input, button {
-        border: none;
-        outline: none;
-    }
-
-    input {
-        width: 100%;
-        height: 35px;
-        padding-left: 13px;
-        padding-right: 46px;
-    }
-
-    button {
-        height: 35px;
-        width: 35px;
-        cursor: pointer;
-        position: absolute;
-    }
-
-    .search input {
-        border: 2px solid gray;
-        border-radius: 5px;
-        background: transparent;
-        top: 0;
-        right: 0;
-    }
-
-    .search button {
-        background: gray;
-        border-radius: 0 5px 5px 0;
-        width: 45px;
-        top: 0;
-        right: 0;
-    }
-
-    .search button:before {
-        content: "搜索";
-        font-size: 13px;
-        color: white;
-    }
+.search{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: #2f3640;
+  height: 100px;
+  border-radius: 60px;
+  padding: 30px;
+}
+.search:hover .b{
+  width: 400px;
+  padding: 0 10px;
+}
+.search:hover .c{
+  background-color: #E4E9F7;
+}
+.b{
+  border: none;
+  background: none;
+  /* 取消选中搜索框时的外边框 */
+  outline: none;
+  width: 0;
+  padding-top: 30px;
+  transition: .4s;
+  line-height: 40px;
+  font-size: 25px;
+  color:  #E4E9F7;
+}
+.c{
+  color: #E4E9F7;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2f3640;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .4s;
+}
 </style>
 
 
