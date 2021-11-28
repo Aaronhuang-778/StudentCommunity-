@@ -29,4 +29,7 @@ class test(TestCase):
         # print(post.__dict__)
         # print(Like.objects.all())
         # tools.getUser(3)
-        print(randint(1,3))
+        # print(randint(1,3))
+        flag, res = tools.search("213")
+        print(res['post'])
+        print(len(res['post']))
