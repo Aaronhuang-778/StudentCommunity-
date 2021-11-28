@@ -140,4 +140,11 @@ export default {
       }
     })
   },
+  search(data) {
+    return request({
+      url: 'http://localhost:8000/api/search',
+      method: 'post',
+      data
+    })
+  },
 }
