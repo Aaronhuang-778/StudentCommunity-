@@ -83,5 +83,16 @@ export default {
     width: 20px;
     height: 20px;
     }
+    :hover {
+      transform: scale(1.5,1.5);
+
+      -ms-transform:scale(1.5,1.5);
+
+      -moz-transform:scale(1.5,1.5);
+
+      -webkit-transform:scale(1.5,1.5);
+
+      -o-transform:scale(1.5,1.5);
+    }
 }
 </style>

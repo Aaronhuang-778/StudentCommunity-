@@ -10,10 +10,10 @@
           </form>
         </div>
       </div>
-    <el-row :gutter="25" style="background-image: image('../src/assets/seesky.jpg')">
+    <el-row :gutter="25" >
       <el-col :span="20" :offset="2"  >
-        <el-card v-for="(item,index) in articles" :key="index" style="background: transparent">
-          <div slot="header">
+        <el-card class="article-card" v-for="(item,index) in articles" :key="index">
+          <div slot="header" >
             <div class="main-text" @click="goforDetail(item.post_id)">
               {{item.post_title}}
             </div>
@@ -126,9 +126,14 @@
   margin-top: -20px;
   text-align: center;
 }
-.el-card {
-  margin-top: 20px;
+.article-card {
+  margin-top: 25px;
+  background: transparent;
+  background-image: url("../src/assets/seesky.jpg") ;
 }
+    .article-card:hover{
+      margin-left: -30px;
+    }
 .article-info {
   margin-top: 10px;
   color: black;
@@ -151,7 +156,7 @@
   margin-bottom: 10px;
 }
 .search {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
     .a{

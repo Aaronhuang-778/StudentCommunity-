@@ -52,7 +52,7 @@ export default {
   }
 
   .el-textarea__inner,.el-input__inner{
-        background: transparent;
+        background: transparent ;
    }
 
 </style>

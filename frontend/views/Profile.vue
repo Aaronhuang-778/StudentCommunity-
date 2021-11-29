@@ -5,7 +5,7 @@
     <el-header style="border-right: 0">
       <blogheader></blogheader>
     </el-header>
-    <el-main>
+    <el-main style="margin-top: 25px">
       <router-view></router-view>
     </el-main>
   </el-container>
