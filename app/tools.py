@@ -243,6 +243,28 @@ def getPost(post_id, user_id):
         return False, None
 
 
+def search(search):
+    try:
+        res = {}
+        post = Post.objects.filter(post_title__icontains=search).order_by('-post_date')
+        posts = []
+        for i in post:
+            p = i.dict()
+            user_name = User.objects.filter(id=p['user_id'])[0].user_name
+            p['user_name'] = user_name
+            labels = []
+            if p['keyword_name'] is not None:
+                labels.append(p['keyword_name'])
+            p['labels'] = labels
+            posts.append(p)
+        res["post"] = posts
+        return True, res
+    except Exception as e:
+        print(str(e))
+        return False, None
+
+
+
 def getPostList():
     try:
         res = {}

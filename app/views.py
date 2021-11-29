@@ -105,6 +105,12 @@ def getPost(request):
     return myResponse(flag, res)
 
 
+def search(request):
+    data = json.loads(request.body)
+    flag, res = tools.search(**data)
+    return myResponse(flag, res)
+
+
 def getPostList(request):
     flag, res = tools.getPostList()
     return myResponse(flag, res)

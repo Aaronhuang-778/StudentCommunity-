@@ -3,7 +3,7 @@
       <div class="search">
         <div class="a">
           <form>
-            <input type="text" class="b" placeholder="输入搜索内容...">
+            <input type="text" class="b" placeholder="输入搜索内容..." v-model="searchstr">
             <a href="#" class="c">
               <img src="../src/assets/function/search.png" style="width:20px;" @click="search">
             </a>
@@ -61,7 +61,8 @@
       props:["user_id", "user_name"],
       data() {
             return {
-                articles:[]
+              articles:[],
+              searchstr:""
             }
       },
     mounted() {
@@ -91,10 +92,12 @@
           goforMan(other_id) {
             this.$router.push({name: 'userProfile', params: {user_id: this.user_id, other_id: other_id}});
           },
-          search() {
+          async search() {
             //fetch list
-            console.log("8888888");
-            this.fetchlist();
+            let res = await api.search({"search": this.searchstr})
+            console.log(res.data.data.post);
+            this.articles = res.data.data.post;
+            // this.fetchlist();
           }
         }
     }

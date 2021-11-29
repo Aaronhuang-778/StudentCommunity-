@@ -112,7 +112,7 @@
         if (res.data.code===20000) {
           this.comments = res.data.data.comment;
           this.article.comment_number = this.comments.length;
-          alert("评论成功");
+          // alert("评论成功");
         } else {
           alert("评论失败");
         }

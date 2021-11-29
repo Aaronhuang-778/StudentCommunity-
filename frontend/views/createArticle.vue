@@ -105,7 +105,8 @@
       async submit() {
         let res = await api.publishPost(this.http());
         if (res.data.code === 20000) {
-          alert("发布成功");
+          // alert("发布成功");
+          this.$router.push({name: 'articlelist', params: {user_id: this.user_id, user_name: this.user_name}});
         }
         else {
           alert("发布失败");
