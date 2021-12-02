@@ -3,7 +3,7 @@
 <div>
   <div class="search">
                 <form>
-                    <input type="text" class="b" placeholder="输入搜索内容...">
+                    <input :="post_title__icontains" type="text" class="b" placeholder="输入搜索内容...">
                   <a href="#" class="c">
                     <img src="src/assets/function/search.png" style="width:20px;" @click="search">
                   </a>
@@ -14,17 +14,26 @@
 </template>
 
 <script>
+import api from '../../tools/user'
+
 export default {
   name: "search",
 
   data() {
     return {
-
+        post_title__icontains: ''
     }
   },
 
   methods: {
-
+    // async search() {
+    //   let res = await api.search({"post_title__icontains": this.post_title__icontains});
+    //   if (res.data.code === 20000) {
+    //
+    //   } else {
+    //     alert("search error!")
+    //   }
+    // }
   }
 }
 </script>

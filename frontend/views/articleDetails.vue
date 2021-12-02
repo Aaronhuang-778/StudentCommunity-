@@ -15,7 +15,7 @@
         </div>
     </div>
 
-  <Comment :article="article" style="margin-top: 150px"></Comment>
+  <Comment :article="article" :user_id="user_id" style="margin-top: 150px"></Comment>
       </div>
 
 </template>

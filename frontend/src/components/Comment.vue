@@ -65,11 +65,12 @@
 <script>
   import api from '../../tools/user';
   import axios from 'axios';
+  import user from "../../tools/user";
 
   export default {
     name: 'Comment',
     // 通过 props 获取当前文章
-    props: {article: Object},
+    props: {article: Object, user_id: Number},
     data: function () {
       return {
         // 所有评论
@@ -103,7 +104,7 @@
       http() {
         return {
           post_id:this.article.post_id,
-          user_id:this.article.user_id,
+          user_id:this.user_id,
           content:this.message
         }
       },

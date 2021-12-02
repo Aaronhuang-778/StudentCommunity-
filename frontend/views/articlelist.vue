@@ -53,11 +53,11 @@
 
 <script>
     import api from '../tools/user';
-    import Search from "../src/components/search";
+    // import Search from "../src/components/search";
 
     export default {
       name: 'articlelist',
-      components: {Search},
+      // components: {Search},
       props:["user_id", "user_name"],
       data() {
             return {
