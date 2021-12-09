@@ -1,3 +1,4 @@
+import hashlib
 import os
 from random import randint
 
@@ -15,6 +16,8 @@ def register(user_name, user_phone, password, sex):
         else:
             picture = randint(1, 3)
         picture = str(picture)
+        password = hashlib.new('md5', password).hexdigest()
+        print(password)
         User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture=picture)
         return True
     except Exception as e:
@@ -23,6 +26,7 @@ def register(user_name, user_phone, password, sex):
 
 
 def signin(user_phone, password):
+    password = hashlib.new('md5', password).hexdigest()
     try:
         user = User.objects.filter(user_phone=user_phone)[0]
         return password == user.password, user.dict()
