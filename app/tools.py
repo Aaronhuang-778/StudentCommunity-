@@ -16,7 +16,9 @@ def register(user_name, user_phone, password, sex):
         else:
             picture = randint(1, 3)
         picture = str(picture)
-        password = hashlib.new('md5', password).hexdigest()
+        md = hashlib.md5()  # 创建md5对象
+        md.update(password.encode(encoding='utf-8'))
+        password = md.hexdigest()
         print(password)
         User.objects.create(user_name=user_name, user_phone=user_phone, password=password, picture=picture)
         return True
@@ -26,7 +28,10 @@ def register(user_name, user_phone, password, sex):
 
 
 def signin(user_phone, password):
-    password = hashlib.new('md5', password).hexdigest()
+    md = hashlib.md5()  # 创建md5对象
+    md.update(password.encode(encoding='utf-8'))
+    password = md.hexdigest()
+    print(password)
     try:
         user = User.objects.filter(user_phone=user_phone)[0]
         return password == user.password, user.dict()
