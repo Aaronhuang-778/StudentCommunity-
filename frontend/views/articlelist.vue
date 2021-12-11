@@ -96,7 +96,11 @@
             //fetch list
             let res = await api.search({"search": this.searchstr})
             console.log(res.data.data.post);
-            this.articles = res.data.data.post;
+            if (res === 200000) {
+              this.articles = res.data.data.post;
+            } else {
+              alert("试试别的关键词吧");
+            }
             // this.fetchlist();
           }
         }
