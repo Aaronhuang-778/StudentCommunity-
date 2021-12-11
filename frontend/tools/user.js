@@ -147,4 +147,17 @@ export default {
       data
     })
   },
+  checkLogin(data) {
+    return request({
+      url: 'http://localhost:8000/api/checkLogin',
+      method: 'get',
+      data
+    })
+  },
+  loginout() {
+    return request({
+      url: 'http://localhost:8000/api/loginout',
+      method: 'get'
+    })
+  }
 }

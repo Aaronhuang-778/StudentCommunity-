@@ -3,6 +3,8 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
+    re_path(r'^checkLogin', views.checkLogin),
+    re_path(r'^loginout', views.loginout),
     re_path(r'^register', views.register),  # . 注册
     re_path(r'^signin', views.signin),  # . 登录
     re_path(r'^publishPost', views.publishPost),  # . 发表帖子

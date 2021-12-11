@@ -23,7 +23,7 @@
     <el-dropdown-item >
       <router-link :to="{name: 'newLog'}" style="color: #333333">
         <li class="el-icon-back">
-            退出登录
+          <button style="border: 0;background-color: transparent;outline: none;" @click="loginout">退出登录</button>
         </li>
       </router-link>
     </el-dropdown-item>
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-
+import api from '../../tools/user';
 export default {
   name: "LSidebar",
   props:["user_id", "user_name", "picture"],
@@ -99,6 +99,9 @@ export default {
   methods: {
     getSrc() {
       return '../assets/photo/' + this.picture + '.png';
+    },
+    async loginout() {
+      let res = await api.loginout();
     }
     // logout() {
     //   this.$router.push({name:"newLog"});

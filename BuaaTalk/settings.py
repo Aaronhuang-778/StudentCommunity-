@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+from django.conf.global_settings import SESSION_COOKIE_NAME, SESSION_COOKIE_PATH
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -26,7 +27,6 @@ SECRET_KEY = 'django-insecure-4a$^j@a#&k_uf1610_79&xmr@7te$noh*gr0o)1@x8_z0dz+40
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -50,7 +50,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# 跨域
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+# 允许所有的请求头
+ALLOWED_HOSTS = ['*', ]
+
 
 ROOT_URLCONF = 'BuaaTalk.urls'
 
@@ -72,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'BuaaTalk.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -85,7 +89,6 @@ DATABASES = {
         'HOST': '127.0.0.1',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -105,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -118,7 +120,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -148,3 +149,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     }
 # }
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎（默认）
+
+SESSION_COOKIE_NAME = "sessionid"  # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+SESSION_COOKIE_PATH = "/"  # Session的cookie保存的路径（默认）
+SESSION_COOKIE_DOMAIN = None  # Session的cookie保存的域名（默认）
+SESSION_COOKIE_SECURE = False  # 是否Https传输cookie（默认）
+SESSION_COOKIE_HTTPONLY = True  # 是否Session的cookie只支持http传输（默认）
+SESSION_COOKIE_AGE = 1209600  # Session的cookie失效日期（2周）（默认）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 是否关闭浏览器使得Session过期（默认），优先级高于SESSION_COOKIE_AGE
+SESSION_SAVE_EVERY_REQUEST = False  # 是否每次请求都保存Session，默认修改之后才保存（默认），即每一次对网站的请求都会刷新Cookie有效时间

@@ -14,10 +14,30 @@ def register(request):
     return myResponse(flag)
 
 
+def checkLogin(request):
+    is_login = request.session.get("is_login")
+    if is_login == "1":
+        flag = True
+        res = request.session.get("user")
+    else:
+        flag = False
+        res = -1
+    return myResponse(flag, res)
+
+
+def loginout(request):
+    request.session.flush()
+    return myResponse(True)
+
+
 def signin(request):
     data = json.loads(request.body)
     data = data['InData']
     flag, res = tools.signin(**data)
+    if flag:
+        request.session["is_login"] = "1"
+        request.session["user"] = res
+        request.session.set_expiry(600)  # 10mins
     return myResponse(flag, res)
 
 
@@ -132,4 +152,5 @@ def myResponse(flag, data=None):
         res = {"code": 20000, "data": data}
     else:
         res = {"code": 40000, "data": data}
-    return JsonResponse(res)
+    response = JsonResponse(res)
+    return response

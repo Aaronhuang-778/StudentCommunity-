@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 
+import checkLogin from '../../views/checkLogin'
 import newLog from '../../views/newLogin'
 import profile from '../../views/Profile'
 import userProfile from '../../views/UserProfile'
@@ -19,6 +20,11 @@ export default new Router({
     {path: '/', redirect: '/?#'},
     {
       path: '/?#',
+      name: 'checkLogin',
+      component: checkLogin
+    },
+    {
+      path: '/newLog?#',
       name: 'newLog',
       component: newLog
     },
